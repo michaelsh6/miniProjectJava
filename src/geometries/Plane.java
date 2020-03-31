@@ -19,7 +19,10 @@ public class Plane implements Geometry{
      * @param p3 point 3
      */
     public Plane(Point3D p1, Point3D p2, Point3D p3) {
-        _normal = null;
+        Vector v1 = p2.subtract(p1);
+        Vector v2 = p3.subtract(p1);
+
+        _normal = v1.crossProduct(v2).normalize();
         _p = p1;
     }
 

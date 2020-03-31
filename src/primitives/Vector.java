@@ -166,8 +166,6 @@ public class Vector {
      */
     @Override
     public String toString() {
-        return "Vector{" +
-                "_head=" + _head +
-                '}';
+        return "vector: " + _head;
     }
 }
