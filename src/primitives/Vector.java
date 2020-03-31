@@ -24,7 +24,7 @@ public class Vector {
     }
 
     /**
-     *copy constractor
+     *copy constructor
      * @param other vector to copy
      */
     public Vector(Vector other) {

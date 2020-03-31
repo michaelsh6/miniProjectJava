@@ -12,7 +12,7 @@ public class Cylinder extends Tube {
     double _height;
 
     /**
-     *comstractor
+     *constructor
      * @param _radius the radius of the Cylinder
      * @param _axisRay the direction and base of the Cylinder (ray object)
      * @param _height  height to calculate ceiling of the Cylinder

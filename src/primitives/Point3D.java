@@ -18,7 +18,7 @@ public class Point3D {
     public static final Point3D ZERO = new Point3D(0.0,0.0,0.0);
 
     /**
-     * constractor to get Coordinate objects
+     * constructor to get Coordinate objects
      * @param _x x axis
      * @param _y y axis
      * @param _z z axis
@@ -30,7 +30,7 @@ public class Point3D {
     }
 
     /**
-     *copy constractor
+     *copy constructor
      * @param other  vector to copy
      */
     public Point3D(Point3D other) {
@@ -40,7 +40,7 @@ public class Point3D {
     }
 
     /**
-     * constractor to get double type
+     * constructor to get double type
      * @param _x x double
      * @param _y y double
      * @param _z z double

@@ -10,7 +10,7 @@ public class Ray {
     Point3D _tail;
 
     /**
-     *constractor
+     *constructor
      * @param _direction the direction of the ray
      * @param _tail the starting point of the ray
      */

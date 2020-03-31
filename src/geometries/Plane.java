@@ -12,7 +12,7 @@ public class Plane implements Geometry{
     Point3D _p;
 
     /**
-     * constractor
+     * constructor
      * get 3 point in 3d coordinate system and calculate the normal and 1 point in the Plane
      * @param p1 point 1
      * @param p2 point 2
@@ -38,7 +38,7 @@ public class Plane implements Geometry{
 
     /**
      * get function
-     * @return the notmal
+     * @return the normal
      */
     public Vector getNormal() {
         return this.getNormal(null);
