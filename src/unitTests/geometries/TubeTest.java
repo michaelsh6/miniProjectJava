@@ -24,4 +24,9 @@ public class TubeTest {
 
         assertEquals("Bad normal to Tube",tube.getNormal(new Point3D(-1,0,6)) ,new Vector(-1,0,0));
     }
+
+    @Test
+    public void TestFindIntersections() {
+        ///TODO implement
+    }
 }

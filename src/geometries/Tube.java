@@ -4,6 +4,8 @@ import primitives.Point3D;
 import primitives.Ray;
 import primitives.Vector;
 
+import java.util.List;
+
 /**
  * Tube class is Infinite Tube in 3d coordinate system
  */
@@ -54,5 +56,11 @@ public class Tube extends RadialGeometry {
                 "_axisRay=" + _axisRay +
                 ", _radius=" + _radius +
                 '}';
+    }
+
+    @Override
+    public List<Point3D> findIntersections(Ray ray) {
+        ///TODO implement
+        return null;
     }
 }

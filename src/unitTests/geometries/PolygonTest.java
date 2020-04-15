@@ -94,4 +94,8 @@ public class PolygonTest {
 
     }
 
+    @Test
+    public void TestFindIntersections() {
+        ///TODO implement
+    }
 }

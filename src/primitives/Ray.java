@@ -44,6 +44,12 @@ public class Ray {
         return new Point3D(_tail);
     }
 
+    public Point3D getPoint(double t){
+        ///TODO implement
+        return null;
+    }
+
+
     /**
      * if 2 rays is equals
      * @param o Second ray
