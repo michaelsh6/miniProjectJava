@@ -40,14 +40,14 @@ public class PlaneTest {
         assertEquals("TC01: the ray is parallel error",intersects == null ? 0 : intersects.size(),0);
 
         //TC02: the ray is intersect plane (1 point)
-        ray = new Ray(new Vector(1,1,1).normalize(),new Point3D(0,0,0));
+        ray = new Ray(new Vector(1,1,1).normalize(),new Point3D(-0.5,-0.5,-0.5));
         intersects = pl.findIntersections(ray);
         assertEquals("TC02:the ray is intersect plane error",intersects == null ? 0 : intersects.size(),1);
 
 
         // =============== Boundary Values Tests ==================
         //TC11: the ray is after the plane (0 point)
-        ray = new Ray(new Vector(-1,-1,-1).normalize(),new Point3D(0,0,0));
+        ray = new Ray(new Vector(-1,-1,-1).normalize(),new Point3D(-0.5,-0.5,-0.5));
         intersects = pl.findIntersections(ray);
         assertEquals("TC12: the ray is after the plane error",intersects == null ? 0 : intersects.size(),0);
 

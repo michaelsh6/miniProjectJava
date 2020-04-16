@@ -110,7 +110,7 @@ public class PolygonTest {
 
         ///3 case the ray is intersect the plane
         //TC02: the ray is intersect inside the Polygon (1 point)
-        ray = new Ray(new Vector(1,1,1).normalize(),new Point3D(0,0,0));
+        ray = new Ray(new Vector(1,1,1).normalize(),new Point3D(-0.5,-0.5,-0.5));
         intersects = pl.findIntersections(ray);
         assertEquals("TC02: the ray is intersect inside the Polygon error",intersects == null ? 0 : intersects.size(),1);
 
@@ -129,7 +129,7 @@ public class PolygonTest {
 
         ///3 case the ray is after the plane
         //TC12: the ray is after the plane inside the Polygon (0 point)
-        ray = new Ray(new Vector(-1,-1,-1).normalize(),new Point3D(0,0,0));
+        ray = new Ray(new Vector(-1,-1,-1).normalize(),new Point3D(-0.5,-0.5,-0.5));
         intersects = pl.findIntersections(ray);
         assertEquals("TC12: the ray is after the plane inside the Polygon error",intersects == null ? 0 : intersects.size(),0);
 
@@ -145,35 +145,35 @@ public class PolygonTest {
 
 
         ///3 case the ray is intersect the plane special case
-        //TC15: the ray is intersect vertecx of the Polygon (1 point)
-        ray = new Ray(new Vector(0,0,1),new Point3D(0,0,0));
+        //TC15: the ray is intersect vertecx of the Polygon (0 point)
+        ray = new Ray(new Vector(0,0,1),new Point3D(0,0,0.5));
         intersects = pl.findIntersections(ray);
         assertEquals("TC15: the ray is intersect vertecx of the Polygon error",intersects == null ? 0 : intersects.size(),0);
 
         //TC16: the ray is intersect edge of the Polygon (0 point)
-        ray = new Ray(new Vector(1,0,0.5).normalize(),new Point3D(0,0,0));
+        ray = new Ray(new Vector(1,0,0.5).normalize(),new Point3D(-0.5,0,-0.5));
         intersects = pl.findIntersections(ray);
         assertEquals("TC16: the ray is intersect edge of the Polygon error",intersects == null ? 0 : intersects.size(),0);
 
         //TC17: the ray is intersect with the continuing line of polygon edge (0 point)
-        ray = new Ray(new Vector(1,0,-0.5).normalize(),new Point3D(0,0,0));
+        ray = new Ray(new Vector(1,0,-0.5).normalize(),new Point3D(0,0,-0.5));
         intersects = pl.findIntersections(ray);
         assertEquals("TC17: the ray is intersect with the continuing line of polygon edge error",intersects == null ? 0 : intersects.size(),0);
 
 
         ///3 case the ray is after the plane special case
-        //TC18: the ray is intersect vertecx of the Polygon (1 point)
-        ray = new Ray(new Vector(0,0,-1),new Point3D(0,0,0));
+        //TC18: the ray is intersect vertecx of the Polygon (0 point)
+        ray = new Ray(new Vector(0,0,-1),new Point3D(0,0,0.5));
         intersects = pl.findIntersections(ray);
         assertEquals("TC18: the ray is intersect vertecx of the Polygon after the plane error",intersects == null ? 0 : intersects.size(),0);
 
         //TC19: the ray is intersect edge of the Polygon (0 point)
-        ray = new Ray(new Vector(-1,0,-0.5).normalize(),new Point3D(0,0,0));
+        ray = new Ray(new Vector(-1,0,-0.5).normalize(),new Point3D(-0.5,0,-0.5));
         intersects = pl.findIntersections(ray);
         assertEquals("TC19: the ray is intersect edge of the Polygon after the plane error",intersects == null ? 0 : intersects.size(),0);
 
         //TC20: the ray is intersect with the continuing line of polygon edge (0 point)
-        ray = new Ray(new Vector(-1,0,0.5).normalize(),new Point3D(0,0,0));
+        ray = new Ray(new Vector(-1,0,0.5).normalize(),new Point3D(0,0,-0.5));
         intersects = pl.findIntersections(ray);
         assertEquals("TC20: the ray is intersect with the continuing line of polygon edge after the plane error",intersects == null ? 0 : intersects.size(),0);
 
