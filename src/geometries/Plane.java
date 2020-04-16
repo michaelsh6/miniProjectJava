@@ -2,8 +2,11 @@ package geometries;
 
 import primitives.Point3D;
 import primitives.Ray;
+import primitives.Util;
 import primitives.Vector;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -47,9 +50,22 @@ public class Plane implements Geometry{
         return this.getNormal(null);
     }
 
+    /**
+     * implements of Intersectable interface
+     * @param ray a ray to calculate the intersections
+     * @return list of intersections
+     */
     @Override
     public List<Point3D> findIntersections(Ray ray) {
-        ///TODO implement
-        return null;
+
+        double nv = _normal.dotProduct(ray.get_direction());
+        if(Util.isZero(nv))
+            return null;
+        double size_scale = Util.alignZero(_normal.dotProduct(_p.subtract(ray.get_tail()))/nv);
+        if(Util.alignZero(size_scale)<=0)
+            return null;
+        Point3D p = ray.getPoint(size_scale);
+        return new ArrayList<>(){{add(p);}};
+
     }
 }
