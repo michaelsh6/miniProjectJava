@@ -3,8 +3,10 @@ package geometries;
 
 import primitives.Point3D;
 import primitives.Ray;
+import primitives.Util;
 import primitives.Vector;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -53,9 +55,33 @@ public class Sphere extends RadialGeometry{
                 '}';
     }
 
+    /**
+     * implements of Intersectable interface
+     * @param ray a ray to calculate the intersections
+     * @return list of intersections
+     */
     @Override
     public List<Point3D> findIntersections(Ray ray) {
-        ///TODO implement
-        return null;
+        Point3D p0 = ray.get_tail();
+        Vector V = ray.get_direction();
+        Vector U = _center.subtract(p0);
+        double tm = V.dotProduct(U);
+        double d = Math.sqrt(U.length()*U.length()-tm*tm);
+        if(Util.alignZero(d)>=_radius)
+            return null;
+        double th = Math.sqrt(_radius*_radius-d*d);
+        double t1 = tm+th;
+        double t2 = tm-th;
+
+        List<Point3D> Intersections = null;
+        if(t1>0 | t2>0) {
+            Intersections = new ArrayList<>();
+            if (t1 > 0)
+                Intersections.add(ray.getPoint(t1));
+            if (t2 > 0)
+                Intersections.add(ray.getPoint(t2));
+        }
+
+        return Intersections;
     }
 }

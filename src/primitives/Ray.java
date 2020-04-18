@@ -45,8 +45,7 @@ public class Ray {
     }
 
     public Point3D getPoint(double t){
-        ///TODO implement
-        return null;
+        return this.get_tail().add(this.get_direction().scale(t));
     }
 
 

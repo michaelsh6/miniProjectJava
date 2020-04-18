@@ -85,10 +85,25 @@ public class Polygon implements Geometry {
         return _plane.getNormal();
     }
 
-
+    /**
+     * implements of Intersectable interface
+     * @param ray a ray to calculate the intersections
+     * @return list of intersections
+     */
     @Override
     public List<Point3D> findIntersections(Ray ray) {
-        ///TODO implement
-        return null;
+        Point3D p0 = ray.get_tail();
+        Vector v = ray.get_direction();
+        Vector v1 = _vertices.get(0).subtract(p0);
+        Vector v2 = _vertices.get(1).subtract(p0);
+        boolean sign = Util.alignZero(v1.crossProduct(v2).dotProduct(v))>0;
+        int size = _vertices.size();
+        for(int i = 2;i<=size;i++){
+            v1 = v2;
+            v2 = _vertices.get(i%size).subtract(p0);
+            if( sign != alignZero(v1.crossProduct(v2).dotProduct(v))>0)
+                return null;
+        }
+        return _plane.findIntersections(ray);
     }
 }
