@@ -104,11 +104,11 @@ public class SphereTest {
 
         // TC16: Ray starts at the center (1 points)
         sphere = new Sphere(1d, new Point3D(1, 1, 1));
-        p1 = new Point3D(2, 1, 0);
+       // p1 = new Point3D(2, 1, 0);
         result = sphere.findIntersections(new Ray(
                 new Vector(0.5, 1, 0.5),new Point3D(1, 1, 1)));
         assertEquals("Wrong number of points", 1, result.size());
-        assertEquals("Ray crosses sphere", List.of(p1), result);
+   //     assertEquals("Ray crosses sphere", List.of(p1), result);
 
 //        sphere = new Sphere(1d, new Point3D(1, 0, 0));
 

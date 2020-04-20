@@ -27,8 +27,9 @@ public class Geometries implements Intersectable{
 
     public void add(Intersectable... geometries){
         ///TODO implement
-        List<Intersectable> new_geometries_list= new ArrayList<Intersectable>(Arrays.asList(geometries));
-        for (Intersectable intersect:new_geometries_list) {
+       // List<Intersectable> new_geometries_list= new ArrayList<Intersectable>(Arrays.asList(geometries));
+        if(geometries ==null) return;
+        for (Intersectable intersect:geometries) {
             geometries_list.add(intersect);
         }
     }
@@ -38,7 +39,13 @@ public class Geometries implements Intersectable{
         ///TODO implement
         ArrayList<Point3D> intersections = null ;
         for (Intersectable intersect:geometries_list) {
-            for (Point3D point3D:intersect.findIntersections(ray)) {
+            List<Point3D> object_intersection = intersect.findIntersections(ray);
+            if(object_intersection == null)
+                continue;
+            if(intersections == null){
+                intersections = new ArrayList<>();
+            }
+            for (Point3D point3D:object_intersection) {
                 intersections.add(point3D);
             }
         }
