@@ -15,18 +15,16 @@ public class Geometries implements Intersectable{
         return geometries_list;
     }
 
+    //TODO javaDoc
     public Geometries() {
-        ///TODO implement
         geometries_list= new ArrayList<Intersectable>();
     }
-
+    //TODO javaDoc
     public Geometries(Intersectable... geometries) {
-        ///TODO implement
         geometries_list= new ArrayList<Intersectable>(Arrays.asList(geometries));
     }
-
+    //TODO javaDoc
     public void add(Intersectable... geometries){
-        ///TODO implement
        // List<Intersectable> new_geometries_list= new ArrayList<Intersectable>(Arrays.asList(geometries));
         if(geometries ==null) return;
         for (Intersectable intersect:geometries) {
@@ -34,9 +32,9 @@ public class Geometries implements Intersectable{
         }
     }
 
+    //TODO javaDoc
     @Override
     public List<Point3D> findIntersections(Ray ray) {
-        ///TODO implement
         ArrayList<Point3D> intersections = null ;
         for (Intersectable intersect:geometries_list) {
             List<Point3D> object_intersection = intersect.findIntersections(ray);

@@ -31,7 +31,6 @@ public class SphereTest {
 
     @Test
     public void TestFindIntersections() {
-        ///TODO implement
         Sphere sphere = new Sphere(1d, new Point3D(1, 0, 0));
 
         // ============ Equivalence Partitions Tests ==============
