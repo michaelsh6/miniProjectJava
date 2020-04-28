@@ -42,7 +42,7 @@ public class PlaneTest {
         //TC02: the ray is intersect plane (1 point)
         ray = new Ray(new Vector(1,1,1).normalize(),new Point3D(-0.5,-0.5,-0.5));
         intersects = pl.findIntersections(ray);
-        assertEquals("TC02:the ray is intersect plane error",intersects == null ? 0 : intersects.size(),1);
+            assertEquals("TC02:the ray is intersect plane error",intersects == null ? 0 : intersects.size(),1);
 
 
         // =============== Boundary Values Tests ==================
