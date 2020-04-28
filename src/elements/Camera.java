@@ -2,10 +2,11 @@ package elements;
 
 import primitives.Point3D;
 import primitives.Ray;
+import primitives.Util;
 import primitives.Vector;
 
 /**
- * /TODO javadoc
+ * Camera class represents Camera in 3d coordinate system
  */
 public class Camera {
     Point3D _p0;
@@ -14,52 +15,83 @@ public class Camera {
     Vector _vRight;
 
     /**
-     * TODO javadoc
-     * @param _p0
-     * @param _vTo
-     * @param _vUp
+     * constructor
+     * @param _p0 location of the camera
+     * @param _vTo Front camera orientation
+     * @param _vUp Top camera orientation
+     *
+     * the constructor calculating the _vRight parameter
      */
     public Camera(Point3D _p0, Vector _vTo, Vector _vUp) {
-        //TODO implement
+        if(!Util.isZero(_vTo.dotProduct(_vUp))){
+            throw new IllegalArgumentException("not orthogonal axis");
+        }
         this._p0 = _p0;
-        this._vTo = _vTo;
-        this._vUp = _vUp;
+        this._vTo = _vTo.normalize();
+        this._vUp = _vUp.normalize();
+        this._vRight = _vTo.crossProduct(_vUp);
     }
 
     /**
-     * TODO javadoc
-     * @param nX
-     * @param nY
-     * @param j
-     * @param i
-     * @param screenDistance
-     * @param screenWidth
-     * @param screenHeight
-     * @return
+     * The function calculates the ray that exits given the photography data
+     * @param nX num of Pixels in x axis
+     * @param nY num of Pixels in y axis
+     * @param j num of column pixel
+     * @param i num of row pixel
+     * @param screenDistance screen Distance rom the camera
+     * @param screenWidth screen Width of the camera
+     * @param screenHeight screen Height of the camera
+     * @return The Ray coming out towards the pixel requested
      */
     public Ray constructRayThroughPixel (int nX, int nY,
                                          int j, int i, double screenDistance,
                                          double screenWidth, double screenHeight){
-        //TODO implement
-        return null;
+        double Rx = screenWidth/nX;
+        double Ry = screenHeight/nY;
+        double Xj = (j-nX/2d)*Rx + Rx/2d;
+        double Yi = (i-nY/2d)*Ry + Ry/2d;
+        if(Util.isZero(screenDistance)){
+            throw new IllegalArgumentException("distance must be different from 0");
+        }
+        Point3D Pc = _p0.add(_vTo.scale(screenDistance));
+        Point3D P_ij = Pc;
+        if(!Util.isZero(Xj))
+            P_ij = P_ij.add(_vRight.scale(Xj));
+        if(!Util.isZero(Yi))
+            P_ij = P_ij.add(_vUp.scale(-Yi));
+        return new Ray(P_ij.subtract(_p0),_p0);
     }
 
 
-    //TODO javadoc
-
+    /**
+     *
+     * @return new p0
+     */
     public Point3D get_p0() {
-        return _p0;
+        return new Point3D(_p0) ;
     }
 
+    /**
+     *
+     * @return new _vTo
+     */
     public Vector get_vTo() {
-        return _vTo;
+        return new Vector(_vTo) ;
     }
 
+    /**
+     *
+     * @return new _vUp
+     */
     public Vector get_vUp() {
-        return _vUp;
+        return new Vector( _vUp);
     }
 
+    /**
+     *
+     * @return new _vRight
+     */
     public Vector get_vRight() {
-        return _vRight;
+        return new Vector( _vRight);
     }
 }
