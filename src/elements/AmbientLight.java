@@ -1,7 +1,7 @@
 package elements;
 
 import primitives.Color;
-
+//TODO javadoc
 public class AmbientLight {
     Color _IA;
     double _kA;

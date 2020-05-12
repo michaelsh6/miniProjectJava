@@ -7,6 +7,7 @@ import elements. *;
 import primitives.*;
 import primitives.Point3D;
 import java.util.List;
+//TODO javadoc
 
 public class Render {
 
@@ -41,20 +42,40 @@ public class Render {
             }
 
         }
-    //TODO
+
     private Color calcColator(Point3D closesPoint) {
         return _scene.getAmbientLight().getIntensity();
     }
-    //TODO
+
     private Point3D getClosessPoint(List<Point3D> intersectionPoints) {
-        return null;
+        double distance;
+        double minDistance = Double.MAX_VALUE ;
+        Point3D minPoint = null;
+        Point3D centerOfCamera = _scene.getCamera().get_p0();
+        for (Point3D point:intersectionPoints){
+            distance = centerOfCamera.distance(point);
+            if (distance < minDistance) {
+                minDistance = distance;
+                minPoint = point;
+            }
+        }
+        return minPoint;
     }
 
 
-    //TODO
     public void printGrid(int interval, java.awt.Color lineColor) {
+        int nX = _imageWriter.getNx();
+        int nY = _imageWriter.getNy();
+        for (int row = 0; row < nY; row++) {
+            for (int column = 0; column < nX; column++){
+                if (row % interval == 0 || column % interval == 0) {
+                    _imageWriter.writePixel(column, row, lineColor);
+                }
+            }
+        }
     }
-    //TODO
+
     public void writeToImage() {
+        _imageWriter.writeToImage();
     }
 }

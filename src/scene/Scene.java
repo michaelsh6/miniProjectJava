@@ -10,6 +10,7 @@ import primitives.Color;
 
 import java.util.ArrayList;
 
+//TODO javadoc
 
 public class Scene {
 

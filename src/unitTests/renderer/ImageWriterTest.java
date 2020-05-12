@@ -13,7 +13,8 @@ import static org.junit.Assert.*;
 
 public class ImageWriterTest {
 
-    //TODO
+    //TODO javadoc
+
     @Test
     public void writeToImageTest() {
         ImageWriter _imageWriter = new ImageWriter("test",1600,1000,800,500);
