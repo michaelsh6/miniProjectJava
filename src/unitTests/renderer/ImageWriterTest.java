@@ -13,8 +13,9 @@ import static org.junit.Assert.*;
 
 public class ImageWriterTest {
 
-    //TODO javadoc
-
+    /**
+     * test to write Solid color image into a jpeg image with a grid
+     */
     @Test
     public void writeToImageTest() {
         ImageWriter _imageWriter = new ImageWriter("test",1600,1000,800,500);
