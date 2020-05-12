@@ -5,8 +5,8 @@ import primitives.Color;
 import scene.Scene;
 import elements. *;
 import primitives.*;
-
-import java.awt.*;
+import primitives.Point3D;
+import java.util.List;
 
 public class Render {
 
@@ -27,7 +27,7 @@ public class Render {
         for (int row = 0; row < nY; row++) {
             for (int column = 0; column < nX; column++) {
                 Ray ray = camera.constructRayThroughPixel(nX, nY, column, row, _scene.getDistance(), _imageWriter.getWidth(), _imageWriter.getHeight());
-                List <Point3D> intersectionPoints = geometries.findIntersections(ray);
+                List<Point3D> intersectionPoints = geometries.findIntersections(ray);
                 if (intersectionPoints == null)
                 {
                     _imageWriter.writePixel(column, row, background);
@@ -42,8 +42,8 @@ public class Render {
 
         }
     //TODO
-    private java.awt.Color calcColator(Point3D closesPoint) {
-        return null;
+    private Color calcColator(Point3D closesPoint) {
+        return _scene.getAmbientLight().getIntensity();
     }
     //TODO
     private Point3D getClosessPoint(List<Point3D> intersectionPoints) {
@@ -52,7 +52,7 @@ public class Render {
 
 
     //TODO
-    public void printGrid(int interval, Color lineColor) {
+    public void printGrid(int interval, java.awt.Color lineColor) {
     }
     //TODO
     public void writeToImage() {

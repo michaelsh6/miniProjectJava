@@ -1,13 +1,19 @@
-package unittests;
+package renderer;
 
 import org.junit.Test;
 
 import elements.*;
 import geometries.*;
+import org.xml.sax.SAXException;
 import primitives.*;
 import renderer.ImageWriter;
 import renderer.Render;
 import scene.Scene;
+
+
+import org.w3c.dom.*;
+import javax.xml.parsers.*;
+import java.io.*;
 
 /**
  * Test rendering abasic image

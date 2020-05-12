@@ -20,7 +20,6 @@ public class Scene {
     Camera _camera;
     double _distance;
 
-    //TODO
     public Scene(String name) {
         _name = name;
        _geometries = new Geometries();
