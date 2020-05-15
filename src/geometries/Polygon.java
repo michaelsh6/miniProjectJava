@@ -128,10 +128,11 @@ public class Polygon extends Geometry {
         }
 
         List<GeoPoint> Intersections  = _plane.findIntersections(ray);
-        List<GeoPoint> GeoIntersections = new LinkedList<>();
-        for (GeoPoint geo : Intersections) {
-            GeoIntersections.add(new GeoPoint(this, geo.getPoint()));
+
+        if(Intersections == null){
+            return null;
         }
-        return GeoIntersections;
+        GeoPoint p =  new GeoPoint(this,Intersections.get(0).getPoint());
+        return new LinkedList<>() {{add(p);}};
     }
 }
