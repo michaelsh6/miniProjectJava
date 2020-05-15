@@ -1,5 +1,6 @@
 package geometries;
 
+import java.util.LinkedList;
 import java.util.List;
 import primitives.*;
 import static primitives.Util.*;
@@ -10,7 +11,7 @@ import static primitives.Util.*;
  *
  * @author Dan
  */
-public class Polygon implements Geometry {
+public class Polygon extends Geometry {
     /**
      * List of polygon's vertices
      */
@@ -21,27 +22,13 @@ public class Polygon implements Geometry {
     protected Plane _plane;
 
     /**
-     * Polygon constructor based on vertices list. The list must be ordered by edge
-     * path. The polygon must be convex.
-     *
-     * @param vertices list of vertices according to their order by edge path
-     * @throws IllegalArgumentException in any case of illegal combination of
-     *                                  vertices:
-     *                                  <ul>
-     *                                  <li>Less than 3 vertices</li>
-     *                                  <li>Consequent vertices are in the same
-     *                                  point
-     *                                  <li>The vertices are not in the same
-     *                                  plane</li>
-     *                                  <li>The order of vertices is not according
-     *                                  to edge path</li>
-     *                                  <li>Three consequent vertices lay in the
-     *                                  same line (180&#176; angle between two
-     *                                  consequent edges)
-     *                                  <li>The polygon is concave (not convex></li>
-     *                                  </ul>
+     * TODO javaDoc
+     * @param emission
+     * @param material
+     * @param vertices
      */
-    public Polygon(Point3D... vertices) {
+    public Polygon(Color emission, Material material,Point3D... vertices) {
+        super(emission,material);
         if (vertices.length < 3)
             throw new IllegalArgumentException("A polygon can't have less than 3 vertices");
         _vertices = List.of(vertices);
@@ -78,6 +65,41 @@ public class Polygon implements Geometry {
             if (positive != (edge1.crossProduct(edge2).dotProduct(n) > 0))
                 throw new IllegalArgumentException("All vertices must be ordered and the polygon must be convex");
         }
+
+    }
+
+    /**
+     * TODO javaDoc
+     * @param vertices
+     */
+    public Polygon(Color emission,Point3D... vertices) {
+        this(emission,new Material(0,0,0),vertices);
+    }
+
+
+    /**
+     * Polygon constructor based on vertices list. The list must be ordered by edge
+     * path. The polygon must be convex.
+     *
+     * @param vertices list of vertices according to their order by edge path
+     * @throws IllegalArgumentException in any case of illegal combination of
+     *                                  vertices:
+     *                                  <ul>
+     *                                  <li>Less than 3 vertices</li>
+     *                                  <li>Consequent vertices are in the same
+     *                                  point
+     *                                  <li>The vertices are not in the same
+     *                                  plane</li>
+     *                                  <li>The order of vertices is not according
+     *                                  to edge path</li>
+     *                                  <li>Three consequent vertices lay in the
+     *                                  same line (180&#176; angle between two
+     *                                  consequent edges)
+     *                                  <li>The polygon is concave (not convex></li>
+     *                                  </ul>
+     */
+    public Polygon(Point3D... vertices){
+        this(Color.BLACK,new Material(0,0,0),vertices);
     }
 
     @Override
@@ -91,7 +113,7 @@ public class Polygon implements Geometry {
      * @return list of intersections
      */
     @Override
-    public List<Point3D> findIntersections(Ray ray) {
+    public List<GeoPoint> findIntersections(Ray ray) {
         Point3D p0 = ray.get_tail();
         Vector v = ray.get_direction();
         Vector v1 = _vertices.get(0).subtract(p0);
@@ -104,6 +126,12 @@ public class Polygon implements Geometry {
             if( sign != alignZero(v1.crossProduct(v2).dotProduct(v))>0)
                 return null;
         }
-        return _plane.findIntersections(ray);
+
+        List<GeoPoint> Intersections  = _plane.findIntersections(ray);
+        List<GeoPoint> GeoIntersections = new LinkedList<>();
+        for (GeoPoint geo : Intersections) {
+            GeoIntersections.add(new GeoPoint(this, geo.getPoint()));
+        }
+        return GeoIntersections;
     }
 }

@@ -1,5 +1,5 @@
 package renderer;
-
+import geometries.Intersectable.GeoPoint;
 import geometries.Intersectable;
 import primitives.Color;
 import scene.Scene;
@@ -40,11 +40,11 @@ public class Render {
         for (int row = 0; row < nY; row++) {
             for (int column = 0; column < nX; column++) {
                 Ray ray = camera.constructRayThroughPixel(nX, nY, column, row, _scene.getDistance(), _imageWriter.getWidth(), _imageWriter.getHeight());
-                List<Point3D> intersectionPoints = geometries.findIntersections(ray);
+                List<GeoPoint> intersectionPoints = geometries.findIntersections(ray);
                 if (intersectionPoints == null) {
                     _imageWriter.writePixel(column, row, background);
                 } else {
-                    Point3D closesPoint = getClosessPoint(intersectionPoints);
+                    GeoPoint closesPoint = getClosessPoint(intersectionPoints);
                     java.awt.Color pixelColor = calcColator(closesPoint).getColor();
                     _imageWriter.writePixel(column, row, pixelColor);
                 }
@@ -58,8 +58,10 @@ public class Render {
      * @param closesPoint the point to consider
      * @return pixel color
      */
-    private Color calcColator(Point3D closesPoint) {
-        return _scene.getAmbientLight().getIntensity();
+    private Color calcColator(GeoPoint closesPoint) {
+        //TODO implement light
+        Color pointColor = closesPoint.getGeometry().get_emission();
+        return _scene.getAmbientLight().getIntensity().add(pointColor);
     }
 
     /**
@@ -67,13 +69,13 @@ public class Render {
      * @param intersectionPoints list of point to consider
      * @return the Closess Point to the camera
      */
-    private Point3D getClosessPoint(List<Point3D> intersectionPoints) {
+    private GeoPoint getClosessPoint(List<GeoPoint> intersectionPoints) {
         double distance;
         double minDistance = Double.MAX_VALUE;
-        Point3D minPoint = null;
+        GeoPoint minPoint = null;
         Point3D centerOfCamera = _scene.getCamera().get_p0();
-        for (Point3D point : intersectionPoints) {
-            distance = centerOfCamera.distance(point);
+        for (GeoPoint point : intersectionPoints) {
+            distance = centerOfCamera.distance(point.getPoint());
             if (distance < minDistance) {
                 minDistance = distance;
                 minPoint = point;

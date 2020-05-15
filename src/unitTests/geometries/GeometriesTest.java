@@ -4,6 +4,7 @@ import org.junit.Test;
 import primitives.Point3D;
 import primitives.Ray;
 import primitives.Vector;
+import geometries.Intersectable.GeoPoint;
 
 import java.util.List;
 
@@ -23,7 +24,7 @@ public class GeometriesTest {
 
         //TC0: empty collection
         Ray ray = new Ray(new Vector(0, 0, 1), new Point3D(4, 4, 0));
-        List<Point3D> geometries_intersections = geometries_collection.findIntersections(ray);
+        List<GeoPoint> geometries_intersections = geometries_collection.findIntersections(ray);
         assertEquals("no shapes at all", 0,geometries_intersections == null ? 0 : geometries_intersections.size());
 
 

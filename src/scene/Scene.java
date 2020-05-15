@@ -2,6 +2,7 @@ package scene;
 
 import elements.AmbientLight;
 import elements.Camera;
+import elements.LightSource;
 import geometries.Geometries;
 import geometries.Geometry;
 import geometries.Intersectable;
@@ -9,6 +10,8 @@ import geometries.Sphere;
 import primitives.Color;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
 
 /**
  * the class represent scene contain geometries lights and properties for rendering
@@ -18,6 +21,7 @@ public class Scene {
     String _name;
     Color _background;
     AmbientLight _ambientLight;
+    List<LightSource> _lights;
     Geometries _geometries;
     Camera _camera;
     double _distance;
@@ -25,6 +29,7 @@ public class Scene {
     public Scene(String name) {
         _name = name;
        _geometries = new Geometries();
+       _lights = new LinkedList<LightSource>();
     }
 
     /**
@@ -96,5 +101,21 @@ public class Scene {
      */
     public void addGeometries(Geometry... geometries) {
         _geometries.add(geometries);
+    }
+
+    /**
+     * TODO javaDoc
+     * @return
+     */
+    public List<LightSource> get_lights() {
+        return _lights;
+    }
+
+    /**
+     * TODO jvaDoc
+     * @param lights
+     */
+    public void addLights(LightSource... lights) {
+        //TODO implement
     }
 }

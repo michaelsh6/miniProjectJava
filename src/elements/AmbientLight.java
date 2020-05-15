@@ -6,10 +6,7 @@ import primitives.Color;
 /**
  * the class represent Ambient Light of objects in scene
  */
-public class AmbientLight {
-    Color _IA;
-    double _kA;
-    Color _intensity;
+public class AmbientLight extends Light{
 
     /**
      *constructor
@@ -17,16 +14,7 @@ public class AmbientLight {
      * @param kA _intensity factor
      */
     public AmbientLight(Color IA, double kA) {
-        _IA = IA;
-        _kA = kA;
-        _intensity = _IA.scale(_kA);
+         super(IA.scale(kA));
     }
 
-    /**
-     *
-     * @return Color intensity
-     */
-    public Color getIntensity() {
-        return _intensity;
-    }
 }

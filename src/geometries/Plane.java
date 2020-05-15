@@ -1,21 +1,46 @@
 package geometries;
 
-import primitives.Point3D;
-import primitives.Ray;
-import primitives.Util;
-import primitives.Vector;
+import primitives.*;
 
-import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.LinkedList;
 import java.util.List;
 
 /**
  * Plane class represents Plane in 3d coordinate system
  */
-public class Plane implements Geometry{
+public class Plane extends Geometry{
 
     Vector _normal;
     Point3D _p;
+
+    /**
+     * TODO javaDoc
+     * @param emission
+     * @param p1
+     * @param p2
+     * @param p3
+     */
+    public Plane(Color emission , Point3D p1, Point3D p2, Point3D p3){
+        this(emission,new Material(0,0,0),p1, p2, p3);
+
+    }
+
+    /**
+     * TODO javaDoc
+     * @param _emission
+     * @param _material
+     * @param p1
+     * @param p2
+     * @param p3
+     */
+    public Plane(Color _emission, Material _material, Point3D p1, Point3D p2, Point3D p3) {
+        super(_emission, _material);
+        Vector v1 = p2.subtract(p1);
+        Vector v2 = p3.subtract(p1);
+
+        _normal = v1.crossProduct(v2).normalize();
+        _p = p1;
+    }
 
     /**
      * constructor
@@ -25,11 +50,7 @@ public class Plane implements Geometry{
      * @param p3 point 3
      */
     public Plane(Point3D p1, Point3D p2, Point3D p3) {
-        Vector v1 = p2.subtract(p1);
-        Vector v2 = p3.subtract(p1);
-
-        _normal = v1.crossProduct(v2).normalize();
-        _p = p1;
+        this(Color.BLACK,new Material(0,0,0),p1, p2, p3);
     }
 
     /**
@@ -56,7 +77,7 @@ public class Plane implements Geometry{
      * @return list of intersections
      */
     @Override
-    public List<Point3D> findIntersections(Ray ray) {
+    public List<GeoPoint> findIntersections(Ray ray) {
 
         double nv = _normal.dotProduct(ray.get_direction());
         if(Util.isZero(nv))
@@ -64,8 +85,8 @@ public class Plane implements Geometry{
         double size_scale = Util.alignZero(_normal.dotProduct(_p.subtract(ray.get_tail()))/nv);
         if(Util.alignZero(size_scale)<=0)
             return null;
-        Point3D p = ray.getPoint(size_scale);
-        return new ArrayList<>(){{add(p);}};
+        GeoPoint p = new GeoPoint(this,ray.getPoint(size_scale));
+        return new LinkedList<>(){{add(p);}};
 
     }
 }

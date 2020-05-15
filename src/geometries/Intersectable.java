@@ -9,10 +9,50 @@ import java.util.List;
  *  Geometry interface represents all object That can be intersect by a ray
  */
 public interface Intersectable {
+
     /**
      * *functoin to implement for calculating the Intersections of ray with Intersectable object
      * @param ray a ray
      * @return list of Intersections
      */
-    List<Point3D> findIntersections(Ray ray);
+    List<GeoPoint> findIntersections(Ray ray);
+
+    /**
+     * TODO javaDoc
+     */
+    public static class GeoPoint {
+        public Geometry geometry;
+        public Point3D point;
+
+        /**
+         * TODO javaDoc
+         * @param geometry
+         * @param point
+         */
+        public GeoPoint(Geometry geometry, Point3D point) {
+            this.geometry = geometry;
+            this.point = point;
+        }
+
+        public Geometry getGeometry() {
+            return geometry;
+        }
+
+        public Point3D getPoint() {
+            return point;
+        }
+
+        @Override
+        public boolean equals(Object o) {
+            if (this == o) return true;
+            if (o == null || getClass() != o.getClass()) return false;
+            GeoPoint geoPoint = (GeoPoint) o;
+            return geometry == geoPoint.geometry &&
+                    point.equals( geoPoint.point);
+        }
+
+    }
+
+
 }
+

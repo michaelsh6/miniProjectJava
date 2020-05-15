@@ -1,10 +1,7 @@
 
 package geometries;
 
-import primitives.Point3D;
-import primitives.Ray;
-import primitives.Util;
-import primitives.Vector;
+import primitives.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,13 +13,34 @@ public class Sphere extends RadialGeometry{
     Point3D _center;
 
     /**
+     * TODO javaDoc
+     * @param emission
+     * @param material
+     * @param _radius
+     * @param _center
+     */
+    public Sphere(Color emission,Material material, double _radius, Point3D _center) {
+        super(emission,material,_radius);
+        this._center = new Point3D(_center);
+    }
+
+    /**
+     * TODO javaDoc
+     * @param emission
+     * @param _radius
+     * @param _center
+     */
+    public Sphere(Color emission, double _radius, Point3D _center) {
+        this(emission,new Material(0,0,0),_radius,_center);
+    }
+
+    /**
      * comstractor
      * @param _radius the radius of the Sphere
      * @param _center the center of the Sphere in 3d coordinate system
      */
-    public Sphere(double _radius,Point3D _center) {
-        super(_radius);
-        this._center = new Point3D(_center);
+    public Sphere(double _radius, Point3D _center) {
+        this(Color.BLACK,_radius,_center);
     }
 
     /**
@@ -61,7 +79,7 @@ public class Sphere extends RadialGeometry{
      * @return list of intersections
      */
     @Override
-    public List<Point3D> findIntersections(Ray ray) {
+    public List<GeoPoint> findIntersections(Ray ray) {
         Point3D p0 = ray.get_tail();
         Vector V = ray.get_direction();
         double t1 = -1;
@@ -81,13 +99,13 @@ public class Sphere extends RadialGeometry{
             t2 = tm-th;
 
         }
-        List<Point3D> Intersections = null;
+        List<GeoPoint> Intersections = null;
         if(t1>0 | t2>0) {
             Intersections = new ArrayList<>();
             if (t1 > 0)
-                Intersections.add(ray.getPoint(t1));
+                Intersections.add(new GeoPoint(this,ray.getPoint(t1)));
             if (t2 > 0)
-                Intersections.add(ray.getPoint(t2));
+                Intersections.add(new GeoPoint(this,ray.getPoint(t2)));
         }
 
         return Intersections;

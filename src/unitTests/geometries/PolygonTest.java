@@ -104,7 +104,7 @@ public class PolygonTest {
                 new Point3D(-1, 1, 1));        // ============ Equivalence Partitions Tests ==============
         //TC01: the ray is parallel (0 point)
         Ray ray = new Ray(new Vector(-2,1,1).normalize(),new Point3D(2,3,4));
-        List<Point3D> intersects = pl.findIntersections(ray);
+        List<Intersectable.GeoPoint> intersects = pl.findIntersections(ray);
         assertEquals("TC01: the ray is parallel error",intersects == null ? 0 : intersects.size(),0);
 
 

@@ -1,5 +1,6 @@
 package elements;
 
+import geometries.Intersectable.GeoPoint;
 import geometries.Geometry;
 import geometries.Polygon;
 import org.junit.Test;
@@ -30,7 +31,7 @@ public class CameraIntegrationTest {
             for (int j=0; j<nY; j++)
             {
                 Ray ray = camera.constructRayThroughPixel(nX, nY, j, i, distance, 3.0, 3.0 );
-                List<Point3D> intersects = geometryShape.findIntersections(ray);
+                List<GeoPoint> intersects = geometryShape.findIntersections(ray);
                 count += intersects == null ? 0 : intersects.size();
             }
         }
