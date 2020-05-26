@@ -9,6 +9,8 @@ import primitives.Point3D;
 
 import java.util.List;
 
+import static primitives.Util.alignZero;
+
 /**
  * the class represent the Render engine to get image from scene
  */
@@ -55,17 +57,86 @@ public class Render {
 
     /**
      * calculate color for single pixel
-     * @param closesPoint the point to consider
+     * @param geoPoint the point to consider
      * @return pixel color
      */
-    private Color calcColator(GeoPoint closesPoint) {
-        //TODO implement light
-        Color pointColor = closesPoint.getGeometry().get_emission();
-        return _scene.getAmbientLight().getIntensity().add(pointColor);
+    private Color calcColator(GeoPoint geoPoint) {
+        Color result = _scene.getAmbientLight().getIntensity();
+        result = result.add(geoPoint.getGeometry().get_emission());
+        List<LightSource> lights = _scene.get_lights();
+
+        Vector v = geoPoint.getPoint().subtract(_scene.getCamera().get_p0()).normalize();
+        Vector normalVector = geoPoint.getGeometry().getNormal(geoPoint.getPoint());
+
+        Material material = geoPoint.getGeometry().get_material();
+        int nShininess = material.getnShininess();
+        double kd = material.getkD();
+        double ks = material.getkS();
+        if (_scene.get_lights() != null) {
+            for (LightSource lightSource : lights) {
+
+                Vector l = lightSource.getL(geoPoint.getPoint());
+                double nl = alignZero(normalVector.dotProduct(l));
+                double nv = alignZero(normalVector.dotProduct(v));
+
+                if (sign(nl) == sign(nv)) {
+                    Color ip = lightSource.getIntensity(geoPoint.getPoint());
+                    result = result.add(ip.scale(kd * negative(nl)),
+                            calcSpecular(ks, l, normalVector, nl, v, nShininess, ip)
+                    );
+                }
+            }
+        }
+
+        return result;
     }
 
     /**
-     * calculate the Closess Point to the camera
+     *
+     * @param signNumber
+     * @return true if signNumber is positive or false if negative
+     */
+    private boolean sign (double signNumber)
+    {
+        return (signNumber >= 0d);
+    }
+
+    private double negative (double num) {
+        if (num > 0)
+            num = -num;
+        return num;
+    }
+    /**
+     * Calculate Specular component of light reflection.
+     *
+     * @param ks         specular component coef
+     * @param l          direction from light to point
+     * @param n          normal to surface at the point
+     * @param nl         dot-product n*l
+     * @param v          direction from point of view to point
+     * @param nShininess shininess level
+     * @param ip         light intensity at the point
+     * @return specular component light effect at the point
+     * @author Dan Zilberstein
+     * <p>
+     * Finally, the Phong model has a provision for a highlight, or specular, component, which reflects light in a
+     * shiny way. This is defined by [rs,gs,bs](-V.R)^p, where R is the mirror reflection direction vector we discussed
+     * in class (and also used for ray tracing), and where p is a specular power. The higher the value of p, the shinier
+     * the surface.
+     */
+    private Color calcSpecular(double ks, Vector l, Vector n, double nl, Vector v, int nShininess, Color ip) {
+        double p = nShininess;
+
+        Vector R = l.add(n.scale(-2 * nl)); // nl must not be zero!
+        double minusVR = -alignZero(R.dotProduct(v));
+        if (minusVR <= 0) {
+            return Color.BLACK; // view from direction opposite to r vector
+        }
+        return ip.scale(ks * Math.pow(minusVR, p));
+    }
+
+    /**
+     * calculate the Closes Point to the camera
      * @param intersectionPoints list of point to consider
      * @return the Closess Point to the camera
      */

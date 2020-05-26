@@ -116,6 +116,8 @@ public class Scene {
      * @param lights
      */
     public void addLights(LightSource... lights) {
-        //TODO implement
+        for (LightSource light:lights){
+            _lights.add(light);
+        }
     }
 }

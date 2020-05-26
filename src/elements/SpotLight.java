@@ -21,8 +21,18 @@ public class SpotLight extends PointLight {
      */
     public SpotLight(Color _intensity, Point3D _poaition,Vector _direction, double _kC, double kL, double kQ) {
         super(_intensity, _poaition, _kC, kL, kQ);
-        this._direction = _direction;
+        this._direction = _direction.normalize();
     }
 
-    //TODO ???????
+    @Override
+    public Color getIntensity(Point3D p) {
+        double cosTeta = _direction.dotProduct(getL(p));
+        return super.getIntensity(p).scale(cosTeta);
+    }
+
+    @Override
+    public Vector getL(Point3D p) {
+        return super.getL(p);
+    }
+//TODO ???????
 }

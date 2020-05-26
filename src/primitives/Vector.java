@@ -144,7 +144,7 @@ public class Vector {
 
     /**
      * normalize the vector
-     * @return the object itselp
+     * @return the object itself
      */
     public Vector normalize(){
         _head = this.normalized()._head;
