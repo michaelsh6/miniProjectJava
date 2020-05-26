@@ -111,7 +111,7 @@ public class LightsTests {
     }
 
     /**
-     * Produce a picture of a two triangles lighted by a directional light
+     * Produce a picture of two triangles lighted by a directional light
      */
     @Test
     public void trianglesDirectional() {
@@ -137,7 +137,7 @@ public class LightsTests {
     }
 
     /**
-     * Produce a picture of a two triangles lighted by a point light
+     * Produce a picture of two triangles lighted by a point light
      */
     @Test
     public void trianglesPoint() {
@@ -165,7 +165,7 @@ public class LightsTests {
     }
 
     /**
-     * Produce a picture of a two triangles lighted by a spot light
+     * Produce a picture of two triangles lighted by a spot light
      */
     @Test
     public void trianglesSpot() {
@@ -194,7 +194,7 @@ public class LightsTests {
 
 
     /**
-     * Produce a picture of a two triangles lighted by a spot light with factor of 10 opening
+     * Produce a picture of two triangles lighted by a spot light with factor of 10 opening
      */
     @Test
     public void trianglesSpotOpening() {
@@ -221,6 +221,9 @@ public class LightsTests {
         render.writeToImage();
     }
 
+    /**
+     * Produce a picture of two triangles lighted by a spot light, point light and direction light with different direction
+     */
     @Test
     public void trianglesTest() {
         Scene scene = new Scene("Test scene");
@@ -236,13 +239,12 @@ public class LightsTests {
                         new Point3D(-150, 150, 150), new Point3D(-70, -70, 50), new Point3D(75, -75, 150)));
 
         scene.addLights(
-                //TODO play with parameter
                 new SpotLight(
                         new Color(500, 250, 250),
                         new Point3D(10, 10, 130),
-                        new Vector(-2, 2, 1),1, 0.0001, 0.000005),
+                        new Vector(2, 2, 1),1, 0.0001, 0.000005),
                 new DirectionalLight(
-                        new Color(30, 15, 15),
+                        new Color(150, 75, 75),
                         new Vector(0, 0, 1)),
                 new PointLight(
                         new Color(200, 150, 120),
@@ -257,7 +259,9 @@ public class LightsTests {
         render.writeToImage();
     }
 
-
+    /**
+     * Produce a picture of a sphere lighted by a spot light, point light and direction light with different direction
+     */
     @Test
     public void sphereTest() {
         Scene scene = new Scene("Test scene");
@@ -270,17 +274,16 @@ public class LightsTests {
                 new Sphere(new Color(java.awt.Color.BLUE), new Material(0.5, 0.5, 100), 50, new Point3D(0, 0, 50)));
 
         scene.addLights(
-                //TODO play with parameter
                 new SpotLight(
                         new Color(500, 300, 0),
                         new Point3D(-50, 50, -50),
-                        new Vector(1, -1, 2), 1, 0.00001, 0.00000001),
+                        new Vector(3, -2, 2), 1, 0.00001, 0.00000001,10),
                 new PointLight(
                         new Color(500, 300, 0),
-                        new Point3D(-50, 50, -50), 1, 0.00001, 0.000001),
+                        new Point3D(50, -50, 50), 1, 0.00001, 0.000001),
                 new DirectionalLight(
-                        new Color(50, 30, 0),
-                        new Vector(1, -1, 1))
+                        new Color(100, 60, 0),
+                        new Vector(3, -1, 4))
         );
 
         ImageWriter imageWriter = new ImageWriter("sphereTest", 150, 150, 500, 500);
