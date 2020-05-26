@@ -5,34 +5,46 @@ import primitives.Point3D;
 import primitives.Vector;
 
 /**
- * TODO javaDoc
+ * SpotLight class Light display with single point of illumination
+ * as well as attenuated intensity of light that increases the angle of impact
  */
 public class SpotLight extends PointLight {
     Vector _direction;
+    double _opening;
 
     /**
-     * TODO javaDoc
-     * @param _intensity
-     * @param _poaition
-     * @param _direction
-     * @param _kC
-     * @param kL
-     * @param kQ
+     * constructor
+     * @param _intensity Color intensity
+     * @param _poaition light poaition
+     * @param _direction light direction
+     * @param kC Constant coefficient
+     * @param kL Linear coefficient
+     * @param kQ Square coefficient
+     * @param opening Opening angle coefficient
      */
-    public SpotLight(Color _intensity, Point3D _poaition,Vector _direction, double _kC, double kL, double kQ) {
-        super(_intensity, _poaition, _kC, kL, kQ);
+    public SpotLight(Color _intensity, Point3D _poaition,Vector _direction, double kC, double kL, double kQ,double opening) {
+        super(_intensity, _poaition, kC, kL, kQ);
         this._direction = _direction.normalize();
+        this._opening = opening;
+    }
+
+    /**
+     * constructor
+     * @param _intensity Color intensity
+     * @param _poaition light poaition
+     * @param _direction light direction
+     * @param kC Constant coefficient
+     * @param kL Linear coefficient
+     * @param kQ Square coefficient
+     */
+    public SpotLight(Color _intensity, Point3D _poaition,Vector _direction, double kC, double kL, double kQ) {
+        this(_intensity,_poaition,_direction, kC,  kL, kQ,1);
     }
 
     @Override
     public Color getIntensity(Point3D p) {
-        double cosTeta = _direction.dotProduct(getL(p));
-        return super.getIntensity(p).scale(cosTeta);
+        double factor  = Math.pow(Math.max(0,_direction.dotProduct(getL(p))),_opening);
+        return super.getIntensity(p).scale(factor);
     }
 
-    @Override
-    public Vector getL(Point3D p) {
-        return super.getL(p);
-    }
-//TODO ???????
 }

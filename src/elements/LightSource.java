@@ -5,20 +5,20 @@ import primitives.Point3D;
 import primitives.Vector;
 
 /**
- * TODO javaDoc
+ * LightSource interface represent Light property
  */
 public interface LightSource {
     /**
-     * TODO javaDoc
-     * @param p
-     * @return
+     * get color Intensity in the lighting point
+     * @param p point of hit
+     * @return Color Intensity
      */
     public Color getIntensity(Point3D p);
 
     /**
-     * TODO javaDoc
-     * @param p
-     * @return
+     * get dirction of light
+     * @param p point of hit
+     * @return direction vector
      */
     public Vector getL(Point3D p);
 

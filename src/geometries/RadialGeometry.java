@@ -10,10 +10,10 @@ public abstract class RadialGeometry extends Geometry{
     double _radius;
 
     /**
-     * TODO javaDoc
-     * @param emission
-     * @param material
-     * @param _radius
+     * constructor
+     * @param emission emission  color
+     * @param material material object
+     * @param _radius get the radius of the object
      */
     public RadialGeometry(Color emission, Material material, double _radius) {
         super(emission,material);
@@ -21,9 +21,8 @@ public abstract class RadialGeometry extends Geometry{
     }
 
     /**
-     * TODO javaDoc
-     * @param _emission
-     * @param _radius
+     * @param _emission emission  color
+     * @param _radius get the radius of the object
      */
     public RadialGeometry(Color _emission, double _radius) {
         this(_emission,new Material(0,0,0),_radius);

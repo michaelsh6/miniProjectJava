@@ -104,16 +104,15 @@ public class Scene {
     }
 
     /**
-     * TODO javaDoc
-     * @return
+     * @return list of lights
      */
     public List<LightSource> get_lights() {
         return _lights;
     }
 
     /**
-     * TODO jvaDoc
-     * @param lights
+     * add lights
+     * @param lights list of lights
      */
     public void addLights(LightSource... lights) {
         for (LightSource light:lights){

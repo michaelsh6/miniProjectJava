@@ -18,26 +18,32 @@ public interface Intersectable {
     List<GeoPoint> findIntersections(Ray ray);
 
     /**
-     * TODO javaDoc
+     * GeoPoint class represent A point that is linked to its geometry object
      */
     public static class GeoPoint {
         public Geometry geometry;
         public Point3D point;
 
         /**
-         * TODO javaDoc
-         * @param geometry
-         * @param point
+         * constructor
+         * @param geometry  linked geometry
+         * @param point point location
          */
         public GeoPoint(Geometry geometry, Point3D point) {
             this.geometry = geometry;
             this.point = point;
         }
 
+        /**
+         * @return Geometry
+         */
         public Geometry getGeometry() {
             return geometry;
         }
 
+        /**
+         * @return tPoint
+         */
         public Point3D getPoint() {
             return point;
         }

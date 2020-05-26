@@ -22,10 +22,10 @@ public class Polygon extends Geometry {
     protected Plane _plane;
 
     /**
-     * TODO javaDoc
-     * @param emission
-     * @param material
-     * @param vertices
+     * constructor
+     * @param emission emission  color
+     * @param material material object
+     * @param vertices list of vertices
      */
     public Polygon(Color emission, Material material,Point3D... vertices) {
         super(emission,material);
@@ -69,8 +69,9 @@ public class Polygon extends Geometry {
     }
 
     /**
-     * TODO javaDoc
-     * @param vertices
+     * constructor
+     * @param emission emission  color
+     * @param vertices list of vertices
      */
     public Polygon(Color emission,Point3D... vertices) {
         this(emission,new Material(0,0,0),vertices);

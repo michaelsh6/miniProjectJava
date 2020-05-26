@@ -3,22 +3,22 @@ package elements;
 import primitives.Color;
 
 /**
- * TODO javaDoc
+ * Light abstract class represents light object with intensity color property
  */
-public class Light {
+public abstract class Light {
     protected Color _intensity;
 
     /**
-     * TODO javaDoc
-     * @param _intensity
+     * constructor
+     * @param _intensity intensity color
      */
     public Light(Color _intensity) {
         this._intensity = _intensity;
     }
 
     /**
-     * TODO javaDoc
-     * @return
+     * get function
+     * @return intensity color
      */
     public Color getIntensity() {
         return _intensity;

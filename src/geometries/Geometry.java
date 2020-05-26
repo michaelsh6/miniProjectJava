@@ -14,7 +14,6 @@ public abstract class Geometry implements Intersectable{
 
 
     /**
-     * TODO javaDoc
      * @return emission color
      */
     public Color get_emission() {
@@ -22,17 +21,16 @@ public abstract class Geometry implements Intersectable{
     }
 
     /**
-     * TODO javaDoc
-     * @return
+     *
+     * @return material object
      */
     public Material get_material() {
         return _material;
     }
 
     /**
-     * TODO javaDoc
      * constructor
-     * @param _emmission
+     * @param _emmission emission color
      */
     public Geometry(Color _emmission) {
         this(_emmission,new Material(0,0,0));
@@ -40,9 +38,9 @@ public abstract class Geometry implements Intersectable{
     }
 
     /**
-     * TODO javaDoc
-     * @param _emission
-     * @param _material
+     * constructor
+     * @param _emission emission color
+     * @param _material material object
      */
     public Geometry(Color _emission, Material _material) {
         this._emission = _emission;
@@ -50,7 +48,6 @@ public abstract class Geometry implements Intersectable{
     }
 
     /**
-     * TODO javaDoc
      *default constructor
      */
     public Geometry() {

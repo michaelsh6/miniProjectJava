@@ -10,23 +10,23 @@ import primitives.Point3D;
 public class Triangle extends Polygon {
 
     /**
-     * TODO javaDoc
-     * @param emission
-     * @param material
-     * @param p1
-     * @param p2
-     * @param p3
+     * constructor
+     * @param emission emission  color
+     * @param material material object
+     * @param p1 point 1
+     * @param p2 point 2
+     * @param p3 point 3
      */
     public Triangle(Color emission, Material material, Point3D p1, Point3D p2, Point3D p3) {
         super(emission,material,p1,p2,p3);
     }
 
     /**
-     * TODO javaDoc
-     * @param emission
-     * @param p1
-     * @param p2
-     * @param p3
+     * constructor
+     * @param emission emission  color
+     * @param p1 point 1
+     * @param p2 point 2
+     * @param p3 point 3
      */
     public Triangle(Color emission, Point3D p1, Point3D p2, Point3D p3) {
         super(emission,p1,p2,p3);

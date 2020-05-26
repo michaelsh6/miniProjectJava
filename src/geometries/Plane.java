@@ -14,11 +14,11 @@ public class Plane extends Geometry{
     Point3D _p;
 
     /**
-     * TODO javaDoc
-     * @param emission
-     * @param p1
-     * @param p2
-     * @param p3
+     * constructor
+     * @param emission emission color
+     * @param p1 point 1
+     * @param p2 point 2
+     * @param p3 point 3
      */
     public Plane(Color emission , Point3D p1, Point3D p2, Point3D p3){
         this(emission,new Material(0,0,0),p1, p2, p3);
@@ -26,15 +26,15 @@ public class Plane extends Geometry{
     }
 
     /**
-     * TODO javaDoc
-     * @param _emission
-     * @param _material
-     * @param p1
-     * @param p2
-     * @param p3
+     * constructor
+     * @param emission emission color
+     * @param material material object
+     * @param p1 point 1
+     * @param p2 point 2
+     * @param p3 point 3
      */
-    public Plane(Color _emission, Material _material, Point3D p1, Point3D p2, Point3D p3) {
-        super(_emission, _material);
+    public Plane(Color emission, Material material, Point3D p1, Point3D p2, Point3D p3) {
+        super(emission, material);
         Vector v1 = p2.subtract(p1);
         Vector v2 = p3.subtract(p1);
 

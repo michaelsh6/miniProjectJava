@@ -13,11 +13,11 @@ public class Sphere extends RadialGeometry{
     Point3D _center;
 
     /**
-     * TODO javaDoc
-     * @param emission
-     * @param material
-     * @param _radius
-     * @param _center
+     * constructor
+     * @param emission emission  color
+     * @param material material object
+     * @param _radius the radius of the Sphere
+     * @param _center the center of the Sphere in 3d coordinate system
      */
     public Sphere(Color emission,Material material, double _radius, Point3D _center) {
         super(emission,material,_radius);
@@ -25,10 +25,10 @@ public class Sphere extends RadialGeometry{
     }
 
     /**
-     * TODO javaDoc
-     * @param emission
-     * @param _radius
-     * @param _center
+     * constructor
+     * @param emission emission  color
+     * @param _radius the radius of the Sphere
+     * @param _center the center of the Sphere in 3d coordinate system
      */
     public Sphere(Color emission, double _radius, Point3D _center) {
         this(emission,new Material(0,0,0),_radius,_center);

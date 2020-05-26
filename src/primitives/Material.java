@@ -1,17 +1,17 @@
 package primitives;
 
 /**
- * TODO javaDoc
+ * Material class represent material properties for lighting calculations
  */
 public class Material {
     private double kD,kS;
     private int nShininess;
 
     /**
-     * TODO javaDoc
-     * @param kD
-     * @param kS
-     * @param nShininess
+     * constructor
+     * @param kD Diffuse coefficient
+     * @param kS Specular coefficient
+     * @param nShininess Shininess coefficient
      */
     public Material(double kD, double kS, int nShininess) {
         this.kD = kD;
@@ -20,8 +20,8 @@ public class Material {
     }
 
     /**
-     * TODO javaDoc
-     * @return
+     * get function
+     * @return kD
      */
     public double getkD() {
         return kD;
@@ -29,8 +29,8 @@ public class Material {
 
 
     /**
-     * TODO javaDoc
-     * @return
+     * get function
+     * @return kS
      */
     public double getkS() {
         return kS;
@@ -38,8 +38,8 @@ public class Material {
 
 
     /**
-     * TODO javaDoc
-     * @return
+     * get function
+     * @return nShininess
      */
     public int getnShininess() {
         return nShininess;

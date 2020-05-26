@@ -102,7 +102,7 @@ public class Render {
     }
 
     private double negative (double num) {
-        if (num > 0)
+        if (num < 0)
             num = -num;
         return num;
     }
