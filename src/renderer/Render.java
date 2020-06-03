@@ -1,6 +1,7 @@
 package renderer;
 import geometries.Intersectable.GeoPoint;
 import geometries.Intersectable;
+import jdk.swing.interop.SwingInterOpUtils;
 import primitives.Color;
 import scene.Scene;
 import elements.*;
@@ -18,6 +19,11 @@ public class Render {
 
     private final Scene _scene;
     private final ImageWriter _imageWriter;
+
+    /**
+     * DELTA is a double const value make up for deviation of saving Point3D at computer memory
+     */
+    private static final double DELTA = 0.01;
 
     /**
      * constructor
@@ -74,20 +80,21 @@ public class Render {
         double ks = material.getkS();
         if (_scene.get_lights() != null) {
             for (LightSource lightSource : lights) {
-
                 Vector l = lightSource.getL(geoPoint.getPoint());
-                double nl = alignZero(normalVector.dotProduct(l));
-                double nv = alignZero(normalVector.dotProduct(v));
+                if (unshaded (l, geoPoint, normalVector, lightSource)) {
 
-                if (sign(nl) == sign(nv)) {
-                    Color ip = lightSource.getIntensity(geoPoint.getPoint());
-                    result = result.add(ip.scale(kd * negative(nl)),
-                            calcSpecular(ks, l, normalVector, nl, v, nShininess, ip)
-                    );
+                    double nl = alignZero(normalVector.dotProduct(l));
+                    double nv = alignZero(normalVector.dotProduct(v));
+
+                    if (sign(nl) == sign(nv)) {
+                        Color ip = lightSource.getIntensity(geoPoint.getPoint());
+                        result = result.add(ip.scale(kd * negative(nl)),
+                                calcSpecular(ks, l, normalVector, nl, v, nShininess, ip)
+                        );
+                    }
                 }
             }
         }
-
         return result;
     }
 
@@ -133,6 +140,30 @@ public class Render {
             return Color.BLACK; // view from direction opposite to r vector
         }
         return ip.scale(ks * Math.pow(minusVR, p));
+    }
+
+    /**
+     *
+     * @param l Vector from light source to GeoPoint
+     * @param gp GeoPoint that lighted by L
+     * @param lightSource source of light
+     * @return true if there isn't geometry between light source and GeoPoint that blocked the light (shade)
+     *          or false if there is
+     */
+    private boolean unshaded(Vector l, GeoPoint gp, Vector n, LightSource lightSource){
+        Vector deltaVector = n.scale(n.dotProduct(l.scale(-1)) > 0 ? DELTA: -DELTA);
+        Point3D tail =  gp.getPoint().add(deltaVector);
+        Ray rayTowardLight = new Ray(l.scale(-1), tail);
+        List<GeoPoint> intersections = _scene.getGeometries().findIntersections(rayTowardLight);
+        if (intersections != null){
+            double lightDistance = lightSource.getDistance(gp.getPoint());
+
+            for (GeoPoint intersectionPoint:intersections) {
+                if (intersectionPoint.getPoint().distance(gp.getPoint()) < lightDistance)
+                    return false;
+            }
+        }
+        return true;
     }
 
     /**
