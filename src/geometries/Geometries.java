@@ -50,13 +50,14 @@ public class Geometries implements Intersectable{
     /**
      * implements of Intersectable interface
      * @param ray a ray to calculate the intersections
+     *  @param max max distance to calculate
      * @return list of intersections
      */
     @Override
-    public List<GeoPoint> findIntersections(Ray ray) {
+    public List<GeoPoint> findIntersections(Ray ray, double max) {
         ArrayList<GeoPoint> intersections = null ;
         for (Intersectable intersect:geometries_list) {
-            List<GeoPoint> object_intersection = intersect.findIntersections(ray);
+            List<GeoPoint> object_intersection = intersect.findIntersections(ray,max);
             if(object_intersection == null)
                 continue;
             if(intersections == null){

@@ -76,10 +76,11 @@ public class Sphere extends RadialGeometry{
     /**
      * implements of Intersectable interface
      * @param ray a ray to calculate the intersections
+     * @param max max distance to calculate
      * @return list of intersections
      */
     @Override
-    public List<GeoPoint> findIntersections(Ray ray) {
+    public List<GeoPoint> findIntersections(Ray ray,double max) {
         Point3D p0 = ray.get_tail();
         Vector V = ray.get_direction();
         double t1 = -1;
@@ -102,10 +103,19 @@ public class Sphere extends RadialGeometry{
         List<GeoPoint> Intersections = null;
         if(t1>0 | t2>0) {
             Intersections = new ArrayList<>();
-            if (t1 > 0)
-                Intersections.add(new GeoPoint(this,ray.getPoint(t1)));
-            if (t2 > 0)
-                Intersections.add(new GeoPoint(this,ray.getPoint(t2)));
+
+            if (t1 > 0 ) {
+                Point3D p = ray.getPoint(t1);
+                double t = p.distance(ray.get_tail());
+                if(Util.alignZero( max-t) >= 0)
+                    Intersections.add(new GeoPoint(this, p));
+            }
+            if (t2 > 0){
+                Point3D p = ray.getPoint(t2);
+                double t = p.distance(ray.get_tail());
+                if(Util.alignZero( max-t) >= 0)
+                    Intersections.add(new GeoPoint(this, p));
+            }
         }
 
         return Intersections;

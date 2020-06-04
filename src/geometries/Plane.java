@@ -74,10 +74,11 @@ public class Plane extends Geometry{
     /**
      * implements of Intersectable interface
      * @param ray a ray to calculate the intersections
+     *  @param max max distance to calculate
      * @return list of intersections
      */
     @Override
-    public List<GeoPoint> findIntersections(Ray ray) {
+    public List<GeoPoint> findIntersections(Ray ray,double max) {
 
         double nv = _normal.dotProduct(ray.get_direction());
         if(Util.isZero(nv))
@@ -86,6 +87,9 @@ public class Plane extends Geometry{
         if(Util.alignZero(size_scale)<=0)
             return null;
         GeoPoint p = new GeoPoint(this,ray.getPoint(size_scale));
+        double t = p.getPoint().distance(ray.get_tail());
+        if(Util.alignZero( max-t) <= 0)
+            return null;
         return new LinkedList<>(){{add(p);}};
 
     }

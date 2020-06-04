@@ -10,6 +10,12 @@ public class Ray {
     Point3D _tail;
 
     /**
+     * DELTA is a double const value make up for deviation of saving Point3D at computer memory
+     */
+    private static final double DELTA = 0.01;
+
+
+    /**
      *constructor
      * @param _direction the direction of the ray
      * @param _tail the starting point of the ray
@@ -17,6 +23,18 @@ public class Ray {
     public Ray(Vector _direction, Point3D _tail) {
         this._direction = _direction.normalized();
         this._tail = _tail;
+    }
+
+    /**
+     *constructor
+     * @param _direction the direction of the ray
+     * @param _tail the starting point of the ray
+     * @param normal for fixing system inaccurate calculation
+     */
+    public Ray(Vector _direction, Point3D _tail,Vector normal) {
+        this._direction = _direction.normalized();
+        Vector deltaVector = normal.scale(normal.dotProduct(_direction.scale(-1)) > 0 ? DELTA: -DELTA);
+        this._tail = _tail.add(deltaVector);
     }
 
     /**

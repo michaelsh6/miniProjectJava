@@ -111,10 +111,11 @@ public class Polygon extends Geometry {
     /**
      * implements of Intersectable interface
      * @param ray a ray to calculate the intersections
+     * @param max max distance to calculate
      * @return list of intersections
      */
     @Override
-    public List<GeoPoint> findIntersections(Ray ray) {
+    public List<GeoPoint> findIntersections(Ray ray,double max) {
         Point3D p0 = ray.get_tail();
         Vector v = ray.get_direction();
         Vector v1 = _vertices.get(0).subtract(p0);
@@ -128,7 +129,7 @@ public class Polygon extends Geometry {
                 return null;
         }
 
-        List<GeoPoint> Intersections  = _plane.findIntersections(ray);
+        List<GeoPoint> Intersections  = _plane.findIntersections(ray,max);
 
         if(Intersections == null){
             return null;

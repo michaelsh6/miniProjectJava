@@ -15,7 +15,20 @@ public interface Intersectable {
      * @param ray a ray
      * @return list of Intersections
      */
-    List<GeoPoint> findIntersections(Ray ray);
+    default List<GeoPoint> findIntersections(Ray ray) {
+        return findIntersections(ray, Double.POSITIVE_INFINITY);
+    }
+
+    /**
+     * functoin to implement for calculating the Intersections of ray with Intersectable object until the max distance
+     * @param ray  a ray
+     * @param max max distance
+     * @return list of Intersections
+     */
+    List<GeoPoint> findIntersections(Ray ray, double max);
+
+
+
 
     /**
      * GeoPoint class represent A point that is linked to its geometry object
