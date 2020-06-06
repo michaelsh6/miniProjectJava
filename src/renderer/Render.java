@@ -58,11 +58,12 @@ public class Render {
 
     }
 
+
     /**
-     * TODO javaDoc
      * calculate color for single pixel
-     *
-     * @param geoPoint the point to consider
+     * @param geoPoint the point to consider     * @param ray
+     * @param RecursionLevel double value for stop recursion if its arrive to MAX_CALC_COLOR_LEVEL
+     * @param ResolutionEffect double value for stop recursion if  Resolution arrive to MIN_CALC_COLOR_K [no really effect]
      * @return pixel color
      */
     private Color calcColor(GeoPoint geoPoint, Ray ray, double RecursionLevel, double ResolutionEffect) {
@@ -109,7 +110,18 @@ public class Render {
         Color result = _scene.getAmbientLight().getIntensity();
         return result.add(calcColor(gp, ray, MAX_CALC_COLOR_LEVEL, 1));
     }
-//TODO javaDoc
+
+    /**
+
+     * @param geoPoint Point to calculate color
+     * @param normal    normal vector from point
+     * @param v direction from point to next geometry point
+     * @param nShininess Shininess coefficient
+     * @param kD Diffuse coefficient
+     * @param kS Specular coefficient
+     * @param kT transparency coefficient
+     * @return  calculate light at point without recursion.
+     */
     private Color getLightsColor(GeoPoint geoPoint, Vector normal, Vector v, int nShininess, double kD, double kS, double kT) {
 
         Color result = Color.BLACK;
@@ -199,13 +211,14 @@ public class Render {
     }
 
 
-    /**TODO javaDoc
+    /**
      * @param l           Vector from light source to GeoPoint
      * @param gp          GeoPoint that lighted by L
      * @param n           normal to GeoPoint
      * @param lightSource source of light
-     * @return true if there isn't geometry between light source and GeoPoint that blocked the light (shade)
-     * or false if there is
+     * @return double value that describe the shade level of geometries
+     * between light source and GeoPoint.
+
      */
     private double transparency(Vector l, GeoPoint gp, Vector n, LightSource lightSource) {
         Ray rayTowardLight = new Ray(l.scale(-1), gp.getPoint(), n);
@@ -244,19 +257,33 @@ public class Render {
         return minPoint;
     }
 
-    //TODO javaDoc
+    /**
+     *
+     * @param ray a Ray to find intersection points between it and scene geometries
+     * @return closest intersection point from all intersections points
+     */
     private GeoPoint findClosestIntersection(Ray ray) {
         GeoPoint ClosestPoint = getClosessPoint(ray.get_tail(),_scene.getGeometries().findIntersections(ray));
         return ClosestPoint;
     }
 
-    //TODO javaDoc
+    /**
+     *
+     * @param p GeoPoint to consider it's color
+     * @param ray Ray of light
+     * @return a Ray at same direction of light after p Point.
+     */
     private Ray constructTransparentRay(GeoPoint p, Ray ray) {
         Vector normal = p.getGeometry().getNormal(p.getPoint());
         return new Ray(ray.get_direction(), p.getPoint(), normal.scale(-1));
     }
 
-    //TODO javaDoc
+    /**
+     *
+     * @param p GeoPoint to consider it's color
+     * @param ray Ray of light
+     * @return a Ray at reflection direction from p Point.
+     */
     private Ray constructReflectedRay(GeoPoint p, Ray ray) {
         Vector normal = p.getGeometry().getNormal(p.getPoint());
         Vector r = ray.get_direction().add(normal.scale(-2 * normal.dotProduct(ray.get_direction())));

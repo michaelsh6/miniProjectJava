@@ -32,7 +32,7 @@ public class Ray {
      * @param tail the starting point of the ray
      * @param normal for fixing system inaccurate calculation
      */
-    public Ray(Vector direction, Point3D tail,Vector normal) {
+    public Ray(Vector direction, Point3D tail, Vector normal) {
         Vector deltaVector = normal.scale(normal.dotProduct(direction) > 0 ? DELTA: -DELTA);
         this._tail = tail.add(deltaVector);
         this._direction = direction.normalize();
