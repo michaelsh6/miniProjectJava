@@ -8,6 +8,7 @@ import primitives.Vector;
  * LightSource interface represent Light property
  */
 public interface LightSource {
+    public static final int ShadowDensity = 5;
     /**
      * get color Intensity in the lighting point
      * @param p point of hit
@@ -29,4 +30,13 @@ public interface LightSource {
      */
     public double getDistance(Point3D point);
 
+    /**
+     * TODO javaDoc
+     * @return
+     */
+    public default double getRadius(){ return 0;}
+    public default int getNumOfSample(){
+        double radius = getRadius();
+        return (int)(ShadowDensity *radius*radius);
+    }
 }

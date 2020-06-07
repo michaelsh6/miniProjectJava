@@ -11,7 +11,7 @@ import primitives.Vector;
 public class PointLight extends Light implements LightSource {
 
     protected Point3D _position;
-    protected double _kC, _kL, _kQ;
+    protected double _kC, _kL, _kQ,_radius;
 
     /**
      * constructor
@@ -22,11 +22,25 @@ public class PointLight extends Light implements LightSource {
      * @param kQ Square coefficient
      */
     public PointLight(Color _intensity, Point3D _poaition, double kC, double kL, double kQ) {
+        this(_intensity, _poaition, kC, kL, kQ,0);
+    }
+
+    /**
+     * constructor
+     * @param _intensity Color intensity
+     * @param _poaition light poaition
+     * @param kC Constant coefficient
+     * @param kL Linear coefficient
+     * @param kQ Square coefficient
+     * @param radius radius of the light (for soft shadow)
+     */
+    public PointLight(Color _intensity, Point3D _poaition, double kC, double kL, double kQ,double radius) {
         super(_intensity);
         this._position = _poaition;
         this._kC = kC;
         this._kL = kL;
         this._kQ = kQ;
+        this._radius = radius;
     }
 
     @Override
@@ -45,5 +59,10 @@ public class PointLight extends Light implements LightSource {
     @Override
     public double getDistance(Point3D point) {
         return _position.distance(point);
+    }
+
+    @Override
+    public double getRadius() {
+        return _radius;
     }
 }

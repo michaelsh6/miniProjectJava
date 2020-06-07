@@ -1,5 +1,6 @@
 package renderer;
 
+import geometries.Intersectable;
 import geometries.Intersectable.GeoPoint;
 import primitives.Color;
 import scene.Scene;
@@ -223,7 +224,21 @@ public class Render {
     private double transparency(Vector l, GeoPoint gp, Vector n, LightSource lightSource) {
         Ray rayTowardLight = new Ray(l.scale(-1), gp.getPoint(), n);
         double lightDistance = lightSource.getDistance(gp.getPoint());
-        List<GeoPoint> intersections = _scene.getGeometries().findIntersections(rayTowardLight,lightDistance);
+        List<Ray> BeamOfRay = rayTowardLight.BeamOfRay(lightSource.getRadius()/lightDistance,lightSource.getNumOfSample());
+        Intersectable Geometries = _scene.getGeometries();
+        double ktr = 0;
+        for(Ray ray : BeamOfRay){
+            ktr+= getKtr(Geometries.findIntersections(ray,lightDistance));
+        }
+        return ktr/BeamOfRay.size();
+    }
+
+    /**TODO javaDoc
+     *
+     * @param intersections
+     * @return
+     */
+    private double getKtr(List<GeoPoint> intersections){
         if (intersections == null) return 1;
         double ktr = 1;
         for (GeoPoint geoPoint : intersections) {
@@ -232,7 +247,6 @@ public class Render {
         }
         return ktr;
     }
-
 
     /**
      * calculate the Closes Point to the camera

@@ -23,10 +23,28 @@ public class SpotLight extends PointLight {
      * @param opening Opening angle coefficient
      */
     public SpotLight(Color _intensity, Point3D _poaition,Vector _direction, double kC, double kL, double kQ,double opening) {
-        super(_intensity, _poaition, kC, kL, kQ);
+        this(_intensity,_poaition,_direction, kC,  kL, kQ,opening,0);
+    }
+
+
+    /**
+     * constructor
+     * @param _intensity Color intensity
+     * @param _poaition light poaition
+     * @param _direction light direction
+     * @param kC Constant coefficient
+     * @param kL Linear coefficient
+     * @param kQ Square coefficient
+     * @param opening Opening angle coefficient
+     * @param radius radius of the light (for soft shadow)
+     */
+    public SpotLight(Color _intensity, Point3D _poaition,Vector _direction, double kC, double kL, double kQ,double opening,double radius) {
+        super(_intensity, _poaition, kC, kL, kQ,radius);
         this._direction = _direction.normalize();
         this._opening = opening;
+
     }
+
 
     /**
      * constructor

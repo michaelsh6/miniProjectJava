@@ -168,4 +168,14 @@ public class Vector {
     public String toString() {
         return "vector: " + _head;
     }
+
+    /**TODO test
+     * @return normalize Orthogonal vectot
+     */
+    public Vector getOrthogonal(){
+        if(Util.isZero(_head.get_x().get()))
+            return new Vector(new Point3D(0,-_head.get_z().get(),_head.get_y().get())).normalize();
+        else
+            return new Vector(new Point3D(-_head.get_y().get(),_head.get_x().get(),0)).normalize();
+    }
 }

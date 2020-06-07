@@ -1,7 +1,10 @@
 package primitives;
 
 import java.lang.management.PlatformManagedObject;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Objects;
+import java.util.Random;
 
 /**
  * Ray class represents a ray in 3d coordinate system
@@ -92,6 +95,31 @@ public class Ray {
                 "_direction=" + _direction +
                 ", _tail=" + _tail +
                 '}';
+    }
+
+    /**TODO test
+     * get list of ray start from the original and randon direction in given range
+     * @param radius the range of the ray direction angel
+     * @param numOfSample num of Sample to return
+     * @return list of ray
+     */
+    public List<Ray> BeamOfRay(double radius, int numOfSample){
+        List<Ray> rayList = new LinkedList<>();
+        rayList.add(this);
+        if(radius == 0 | numOfSample<=1)
+            return rayList;
+
+        Vector x_axis = this._direction.getOrthogonal();
+        Vector y_axis = this._direction.crossProduct(x_axis).normalize();
+        double[] randomRadius = new Random().doubles(2*numOfSample, -radius, radius).distinct().toArray();
+        int reyListLen = randomRadius.length/2;
+        for(int i = 0; i<reyListLen;i++){
+            Vector current_x_axis = x_axis.scale(randomRadius[i]);
+            Vector current_y_axis = y_axis.scale(randomRadius[reyListLen+i]);
+            Vector currentVector = this._direction.add(current_x_axis).add(current_y_axis);
+            rayList.add(new Ray(currentVector,this._tail));
+        }
+        return rayList;
     }
 
 }
