@@ -99,7 +99,7 @@ public class Scene {
     /**
      * add Geometries to the scene
      */
-    public void addGeometries(Geometry... geometries) {
+    public void addGeometries(Intersectable... geometries) {
         _geometries.add(geometries);
     }
 

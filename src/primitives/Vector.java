@@ -169,8 +169,8 @@ public class Vector {
         return "vector: " + _head;
     }
 
-    /**TODO test
-     * @return normalize Orthogonal vectot
+    /**
+     * @return normalize Orthogonal vector
      */
     public Vector getOrthogonal(){
         if(Util.isZero(_head.get_x().get()))

@@ -100,4 +100,5 @@ public class ImageWriter {
         _image.setRGB(xIndex, yIndex, color.getRGB());
     }
 
+
 }

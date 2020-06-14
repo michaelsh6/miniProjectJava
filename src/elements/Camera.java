@@ -5,6 +5,8 @@ import primitives.Ray;
 import primitives.Util;
 import primitives.Vector;
 
+import java.util.List;
+
 /**
  * Camera class represents Camera in 3d coordinate system
  */
@@ -13,7 +15,6 @@ public class Camera {
     Vector _vTo;
     Vector _vUp;
     Vector _vRight;
-
     /**
      * constructor
      * @param _p0 location of the camera
@@ -94,4 +95,14 @@ public class Camera {
     public Vector get_vRight() {
         return new Vector( _vRight);
     }
+
+//    public Camera setSuperSampling(int superSampling) {
+//        this.superSampling = superSampling;
+//        return this;
+//    }
+
+//    public List<Ray> constructRaysThroughPixel(int nX, int nY, int col, int row, double dist, double width, double height) {
+//        double Rx = width/nX;
+//        return constructRayThroughPixel( nX,  nY,  col,  row,  dist,  width,  height).BeamOfRay(Rx/2,superSampling);
+//    }
 }
