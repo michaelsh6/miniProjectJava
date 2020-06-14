@@ -265,19 +265,19 @@ public class Render {
         Color result = geoPoint.getGeometry().get_emission().scale(1-kT);
         result = result.add(getLightsColor(geoPoint, normalVector, v, nShininess, kd, ks, ResolutionEffect));
 
-        if (RecursionLevel > 0 & newkT > MIN_CALC_COLOR_K) {
+        if (RecursionLevel < MAX_CALC_COLOR_LEVEL & newkT > MIN_CALC_COLOR_K) {
             Ray newRayTransparent = constructTransparentRay(geoPoint, ray);
             GeoPoint newPointTransparent = findClosestIntersection(newRayTransparent);
             if (newPointTransparent != null)
-                result = result.add(calcColor(newPointTransparent, newRayTransparent, RecursionLevel - 1, newkT).scale(kT));
+                result = result.add(calcColor(newPointTransparent, newRayTransparent, RecursionLevel + 1, newkT).scale(kT));
             else
                 result = result.add(_scene.getBackground()).scale(kT);
         }
-        if (RecursionLevel > 0 & newkR > MIN_CALC_COLOR_K) {
+        if (RecursionLevel < MAX_CALC_COLOR_LEVEL & newkR > MIN_CALC_COLOR_K) {
             Ray newRayReflected = constructReflectedRay(geoPoint, ray);
             GeoPoint newPointReflected = findClosestIntersection(newRayReflected);
             if (newPointReflected != null)
-                result = result.add(calcColor(newPointReflected, newRayReflected, RecursionLevel - 1, newkR).scale(kR));
+                result = result.add(calcColor(newPointReflected, newRayReflected, RecursionLevel + 1, newkR).scale(kR));
             else
                 result = result.add(_scene.getBackground()).scale(kR);
         }
@@ -293,7 +293,7 @@ public class Render {
 //            if (closesPoint == null)
 //                result = result.add(_scene.getBackground().reduce(rays.size()));
 //            else
-//                result = result.add(calcColor(closesPoint, ray, MAX_CALC_COLOR_LEVEL, 1).reduce(rays.size()));
+//                result = result.add(calcColor(closesPoint, ray, 0, 1).reduce(rays.size()));
 //        }
 //        return result;
 //    }
@@ -310,7 +310,7 @@ public class Render {
         if (closesPoint == null)
             return _scene.getBackground();
         Color result = _scene.getAmbientLight().getIntensity();
-        return result.add(calcColor(closesPoint, ray, MAX_CALC_COLOR_LEVEL, 1));
+        return result.add(calcColor(closesPoint, ray, 0, 1));
     }
 
 

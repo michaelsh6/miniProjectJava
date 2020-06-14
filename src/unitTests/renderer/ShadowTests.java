@@ -30,7 +30,6 @@ public class ShadowTests {
         Color color2 = new Color(1,1,1);
         Material material1 = new Material(0.5,0.5,0,0,0);
         Material material2 = new Material(0.2,0.8,30,0,0.8);
-
         Geometries geometries = new Geometries();
         for (int i = -numWithe;i<numWithe;i++){
             for (int j = -numLen;j<numLen ;j++){
@@ -48,6 +47,8 @@ public class ShadowTests {
         Scene scene = new Scene("Test scene");
         double cameraAngel = Math.toRadians(-3);
         scene.setCamera(new Camera(new Point3D(0, -15, 3), new Vector(0, Math.cos(cameraAngel), Math.sin(cameraAngel)), new Vector(0, -Math.sin(cameraAngel), Math.cos(cameraAngel))));
+//        double cameraAngel = Math.toRadians(-90);
+//        scene.setCamera(new Camera(new Point3D(0, -0, 20), new Vector(0, Math.cos(cameraAngel), Math.sin(cameraAngel)), new Vector(0, -Math.sin(cameraAngel), Math.cos(cameraAngel))));
         scene.setDistance(400);
         scene.setBackground(new Color(255,255,255).scale(0.2));
         scene.setAmbientLight(new AmbientLight(new Color(0,0,0), 0.15));
@@ -63,17 +64,27 @@ public class ShadowTests {
                         new Material(0.5, 0.5, 20, 0, 0.9),1,
                         new Point3D(0,-3,1.1)),
                 new Sphere(new Color(173,255,47).scale(.4),
-                        new Material(0.5, 0.5, 30, .0,.2 ),2.5,
-                        new Point3D(-2.6,0,2.6))
+                        new Material(0.3, 0.5, 30, .0,.3 ),2.5,
+                        new Point3D(-2.6,0,2.6)),
+
+                new Sphere(new Color(255,215,0),
+                        new Material(0.4, 0.4, 20, .6, 0),0.7,
+                        new Point3D(-6,2,0.75))
         );
+        scene.addLights(
+        new PointLight(new Color(255, 255, 255).scale(0.5),
+                new Point3D(20, 50, 10), 1, 4E-5, 2E-7,10),
+        new DirectionalLight(new Color(255, 255, 204).scale(0.1),
+                        new Vector(-1,-0.1,-0.3)),
+        new SpotLight(
+                new Color(255,255,200).scale(2),
+                new Point3D(0,0,20),
+                new Vector(0,0,-1),
+                1,  4E-5, 2E-7,40, 5));
 
-        scene.addLights(new PointLight(new Color(255, 255, 255),
-                new Point3D(100, -500, 400), 1, 4E-5, 2E-7,10));
 
-
-
-        ImageWriter imageWriter = new ImageWriter("testComplex_scene1", 400, 300, 480, 360);
-        Render render = new Render(imageWriter, scene).setMultithreading(3).setDebugPrint();//.setSoftSadow(16)
+        ImageWriter imageWriter = new ImageWriter("testComplex_scene", 400, 300, 960, 720);
+        Render render = new Render(imageWriter, scene).setMultithreading(3).setDebugPrint().setSoftSadow(81);
 
         render.renderImage();
         render.writeToImage();
