@@ -10,9 +10,8 @@ import java.util.List;
 /**
  * Geometries class represents Collection of Intersectable objects
  */
-public class Geometries implements Intersectable{
+public class Geometries extends Intersectable{
     List<Intersectable> geometries_list;
-
     /**
      * @return Geometries_list
      */
@@ -33,6 +32,7 @@ public class Geometries implements Intersectable{
      */
     public Geometries(Intersectable... geometries) {
         geometries_list= new ArrayList<Intersectable>(Arrays.asList(geometries));
+        setBoundingBox(geometries);
     }
 
     /**
@@ -45,6 +45,7 @@ public class Geometries implements Intersectable{
         for (Intersectable intersect:geometries) {
             geometries_list.add(intersect);
         }
+        setBoundingBox(geometries);
     }
 
     /**
@@ -57,6 +58,8 @@ public class Geometries implements Intersectable{
     public List<GeoPoint> findIntersections(Ray ray, double max) {
         ArrayList<GeoPoint> intersections = null ;
         for (Intersectable intersect:geometries_list) {
+            if(!isBoundingBoxIntersect(ray))
+                continue;
             List<GeoPoint> object_intersection = intersect.findIntersections(ray,max);
             if(object_intersection == null)
                 continue;
@@ -68,5 +71,20 @@ public class Geometries implements Intersectable{
             }
         }
         return intersections;
+    }
+
+    /**
+     * set Bounding Box values
+     * @param geometries geometries list
+     */
+    public void setBoundingBox(Intersectable[] geometries){
+        for (Intersectable geometry : geometries) {
+            this.boundingBoxMaxX = Math.max(this.boundingBoxMaxX, geometry.boundingBoxMaxX);
+            this.boundingBoxMaxY = Math.max(this.boundingBoxMaxY, geometry.boundingBoxMaxY);
+            this.boundingBoxMaxZ = Math.max(this.boundingBoxMaxZ, geometry.boundingBoxMaxZ);
+            this.boundingBoxMinX = Math.min(this.boundingBoxMaxX, geometry.boundingBoxMinX);
+            this.boundingBoxMinY = Math.min(this.boundingBoxMaxY, geometry.boundingBoxMinY);
+            this.boundingBoxMinZ = Math.min(this.boundingBoxMaxZ, geometry.boundingBoxMinZ);
+        }
     }
 }

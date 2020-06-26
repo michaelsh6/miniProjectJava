@@ -6,16 +6,24 @@ import primitives.Ray;
 import java.util.List;
 
 /**
- *  Geometry interface represents all object That can be intersect by a ray
+ *  Geometry  abstract class represents all object That can be intersect by a ray
  */
-public interface Intersectable {
+public abstract class Intersectable {
+
+    protected double
+            boundingBoxMinX = Double.MAX_VALUE
+            ,boundingBoxMaxX = Double.MIN_VALUE
+            ,boundingBoxMinY= Double.MAX_VALUE
+            ,boundingBoxMaxY = Double.MIN_VALUE
+            ,boundingBoxMinZ= Double.MAX_VALUE
+            ,boundingBoxMaxZ = Double.MIN_VALUE;
 
     /**
-     * *functoin to implement for calculating the Intersections of ray with Intersectable object
+     * *function to implement for calculating the Intersections of ray with Intersectable object
      * @param ray a ray
      * @return list of Intersections
      */
-    default List<GeoPoint> findIntersections(Ray ray) {
+   public  List<GeoPoint> findIntersections(Ray ray) {
         return findIntersections(ray, Double.POSITIVE_INFINITY);
     }
 
@@ -25,10 +33,12 @@ public interface Intersectable {
      * @param max max distance
      * @return list of Intersections
      */
-    List<GeoPoint> findIntersections(Ray ray, double max);
+    public abstract List<GeoPoint>  findIntersections(Ray ray, double max);
 
 
-
+    public boolean isBoundingBoxIntersect(Ray ray){
+        return  false;
+    }
 
     /**
      * GeoPoint class represent A point that is linked to its geometry object
@@ -71,6 +81,7 @@ public interface Intersectable {
         }
 
     }
+
 
 
 }

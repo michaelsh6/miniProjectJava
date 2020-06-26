@@ -7,7 +7,7 @@ import primitives.Material;
 /**
  *  Geometry abstract class represents all Geometrys 3d object
  */
-public abstract class Geometry implements Intersectable{
+public abstract class Geometry extends Intersectable{
 
     protected Color _emission;
     protected Material _material;

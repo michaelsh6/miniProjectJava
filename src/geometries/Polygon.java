@@ -2,7 +2,9 @@ package geometries;
 
 import java.util.LinkedList;
 import java.util.List;
+
 import primitives.*;
+
 import static primitives.Util.*;
 
 /**
@@ -23,12 +25,13 @@ public class Polygon extends Geometry {
 
     /**
      * constructor
+     *
      * @param emission emission  color
      * @param material material object
      * @param vertices list of vertices
      */
-    public Polygon(Color emission, Material material,Point3D... vertices) {
-        super(emission,material);
+    public Polygon(Color emission, Material material, Point3D... vertices) {
+        super(emission, material);
         if (vertices.length < 3)
             throw new IllegalArgumentException("A polygon can't have less than 3 vertices");
         _vertices = List.of(vertices);
@@ -65,16 +68,26 @@ public class Polygon extends Geometry {
             if (positive != (edge1.crossProduct(edge2).dotProduct(n) > 0))
                 throw new IllegalArgumentException("All vertices must be ordered and the polygon must be convex");
         }
+        //bounding box
+        for (Point3D point : _vertices) {
+            this.boundingBoxMaxX = Math.max(this.boundingBoxMaxX, point.get_x().get());
+            this.boundingBoxMaxY = Math.max(this.boundingBoxMaxY, point.get_y().get());
+            this.boundingBoxMaxZ = Math.max(this.boundingBoxMaxZ, point.get_z().get());
+            this.boundingBoxMinX = Math.min(this.boundingBoxMaxX, point.get_x().get());
+            this.boundingBoxMinY = Math.min(this.boundingBoxMaxY, point.get_y().get());
+            this.boundingBoxMinZ = Math.min(this.boundingBoxMaxZ, point.get_z().get());
+        }
 
     }
 
     /**
      * constructor
+     *
      * @param emission emission  color
      * @param vertices list of vertices
      */
-    public Polygon(Color emission,Point3D... vertices) {
-        this(emission,new Material(0,0,0),vertices);
+    public Polygon(Color emission, Point3D... vertices) {
+        this(emission, new Material(0, 0, 0), vertices);
     }
 
 
@@ -99,8 +112,8 @@ public class Polygon extends Geometry {
      *                                  <li>The polygon is concave (not convex></li>
      *                                  </ul>
      */
-    public Polygon(Point3D... vertices){
-        this(Color.BLACK,new Material(0,0,0),vertices);
+    public Polygon(Point3D... vertices) {
+        this(Color.BLACK, new Material(0, 0, 0), vertices);
     }
 
     @Override
@@ -110,31 +123,36 @@ public class Polygon extends Geometry {
 
     /**
      * implements of Intersectable interface
+     *
      * @param ray a ray to calculate the intersections
      * @param max max distance to calculate
      * @return list of intersections
      */
     @Override
-    public List<GeoPoint> findIntersections(Ray ray,double max) {
+    public List<GeoPoint> findIntersections(Ray ray, double max) {
         Point3D p0 = ray.get_tail();
         Vector v = ray.get_direction();
         Vector v1 = _vertices.get(0).subtract(p0);
         Vector v2 = _vertices.get(1).subtract(p0);
-        boolean sign = Util.alignZero(v1.crossProduct(v2).dotProduct(v))>0;
+        boolean sign = Util.alignZero(v1.crossProduct(v2).dotProduct(v)) > 0;
         int size = _vertices.size();
-        for(int i = 2;i<=size;i++){
+        for (int i = 2; i <= size; i++) {
             v1 = v2;
-            v2 = _vertices.get(i%size).subtract(p0);
-            if( sign != alignZero(v1.crossProduct(v2).dotProduct(v))>0)
+            v2 = _vertices.get(i % size).subtract(p0);
+            if (sign != alignZero(v1.crossProduct(v2).dotProduct(v)) > 0)
                 return null;
         }
 
-        List<GeoPoint> Intersections  = _plane.findIntersections(ray,max);
+        List<GeoPoint> Intersections = _plane.findIntersections(ray, max);
 
-        if(Intersections == null){
+        if (Intersections == null) {
             return null;
         }
-        GeoPoint p =  new GeoPoint(this,Intersections.get(0).getPoint());
-        return new LinkedList<>() {{add(p);}};
+        GeoPoint p = new GeoPoint(this, Intersections.get(0).getPoint());
+        return new LinkedList<>() {{
+            add(p);
+        }};
     }
+
 }
+
