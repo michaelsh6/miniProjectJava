@@ -99,10 +99,10 @@ public class ReflectionRefractionTests {
                         30, new Point3D(60, -50, 50)));
 
         scene.addLights(new SpotLight(new Color(700, 400, 400), //
-                new Point3D(60, -50, 0), new Vector(0, 0, 1), 1, 4E-5, 2E-7));
+                new Point3D(60, -50, 0), new Vector(0, 0, 1), 1, 4E-5, 2E-7,1,2));
 
         ImageWriter imageWriter = new ImageWriter("shadow with transparency", 200, 200, 600, 600);
-        Render render = new Render(imageWriter, scene);
+        Render render = new Render(imageWriter, scene).setSoftSadow(81).setMultithreading(3).setDebugPrint();
 
         render.renderImage();
         render.writeToImage();

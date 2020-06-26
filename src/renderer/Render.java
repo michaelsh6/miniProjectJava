@@ -194,10 +194,10 @@ public class Render {
     }
 
     /**
-     * TODO javaDoc
+     * set num Of sampel for Soft Sadow
      *
-     * @param numOfsampel
-     * @return
+     * @param numOfsampel  num Of sampel
+     * @return this
      */
     public Render setSoftSadow(int numOfsampel) {
         this._NumOfSampel = numOfsampel;
