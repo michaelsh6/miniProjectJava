@@ -119,4 +119,11 @@ public class Scene {
             _lights.add(light);
         }
     }
+
+    /**
+     * build bvh tree from geometries
+     */
+    public void BuildTree(){
+        _geometries.BuildTree();
+    }
 }

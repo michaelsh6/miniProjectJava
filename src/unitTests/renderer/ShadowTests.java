@@ -47,16 +47,16 @@ public class ShadowTests {
         Scene scene = new Scene("Test scene");
         double cameraAngel = Math.toRadians(-3);
         scene.setCamera(new Camera(new Point3D(0, -15, 3), new Vector(0, Math.cos(cameraAngel), Math.sin(cameraAngel)), new Vector(0, -Math.sin(cameraAngel), Math.cos(cameraAngel))));
-//        double cameraAngel = Math.toRadians(-90);
-//        scene.setCamera(new Camera(new Point3D(0, -0, 20), new Vector(0, Math.cos(cameraAngel), Math.sin(cameraAngel)), new Vector(0, -Math.sin(cameraAngel), Math.cos(cameraAngel))));
+    //    double cameraAngel = Math.toRadians(-90);
+     //   scene.setCamera(new Camera(new Point3D(0, -0, 20), new Vector(0, Math.cos(cameraAngel), Math.sin(cameraAngel)), new Vector(0, -Math.sin(cameraAngel), Math.cos(cameraAngel))));
         scene.setDistance(400);
         scene.setBackground(new Color(255,255,255).scale(0.2));
         scene.setAmbientLight(new AmbientLight(new Color(0,0,0), 0.15));
         Material materialPlane = new Material(1, 0, 0, 0, 0);
         scene.addGeometries(
                 pattern(8,5,2),
-
-
+//
+//
                 new Sphere(new Color(0,0,255),
                         new Material(0.5, 0.5, 20, 0, 0.9),2,
                         new Point3D(2.1,0,2.1)),
@@ -71,6 +71,7 @@ public class ShadowTests {
                         new Material(0.4, 0.4, 20, .6, 0),0.7,
                         new Point3D(-6,2,0.75))
         );
+
         scene.addLights(
         new PointLight(new Color(255, 255, 255).scale(0.5),
                 new Point3D(20, 50, 10), 1, 4E-5, 2E-7,10),
@@ -89,6 +90,29 @@ public class ShadowTests {
         render.renderImage();
         render.writeToImage();
     }
+
+    @Test
+    public void flattenTest(){
+        Geometries geometries = new Geometries(
+           //     pattern(8,5,2),
+
+
+                new Sphere(new Color(0,0,255),
+                        new Material(0.5, 0.5, 20, 0, 0.9),2,
+                        new Point3D(2.1,0,2.1)),
+                new Sphere(new Color(100,0,0),
+                        new Material(0.5, 0.5, 20, 0, 0.9),1,
+                        new Point3D(0,-3,1.1)),
+                new Sphere(new Color(173,255,47).scale(.4),
+                        new Material(0.3, 0.5, 30, .0,.3 ),2.5,
+                        new Point3D(-2.6,0,2.6)),
+
+                new Sphere(new Color(255,215,0),
+                        new Material(0.4, 0.4, 20, .6, 0),0.7,
+                        new Point3D(-6,2,0.75))
+        );
+        geometries.findIntersections(new Ray(new Vector(1,0,0),new Point3D(0,0,0)));
+}
 
     /**
      * Produce a picture of a sphere and triangle with point light and shade

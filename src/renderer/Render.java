@@ -213,6 +213,7 @@ public class Render {
     public Render(ImageWriter imageWriter, Scene scene) {
         this._scene = scene;
         this._imageWriter = imageWriter;
+        _scene.BuildTree();
     }
 
 

@@ -23,6 +23,7 @@ public class Plane extends Geometry{
     public Plane(Color emission , Point3D p1, Point3D p2, Point3D p3){
         this(emission,new Material(0,0,0),p1, p2, p3);
 
+
     }
 
     /**
@@ -40,6 +41,28 @@ public class Plane extends Geometry{
 
         _normal = v1.crossProduct(v2).normalize();
         _p = p1;
+
+        //bunding box
+        Point3D head = _normal.get_head();
+        boundingBoxMaxX = Double.MAX_VALUE;
+        boundingBoxMinX = Double.MIN_VALUE;
+        boundingBoxMaxY= Double.MAX_VALUE;
+        boundingBoxMinY = Double.MIN_VALUE;
+        boundingBoxMaxZ= Double.MAX_VALUE;
+        boundingBoxMinZ = Double.MIN_VALUE;
+        if(Util.isZero(head.get_x().get()) && Util.isZero(head.get_y().get())){
+            boundingBoxMaxX = Double.MAX_VALUE;
+            boundingBoxMinX = Double.MIN_VALUE;
+        }
+        else if (Util.isZero(head.get_x().get()) && Util.isZero(head.get_z().get())){
+            boundingBoxMaxY = Double.MAX_VALUE;
+            boundingBoxMinY = Double.MIN_VALUE;
+        }
+        else if (Util.isZero(head.get_y().get()) && Util.isZero(head.get_z().get())){
+            boundingBoxMaxZ = Double.MAX_VALUE;
+            boundingBoxMinZ = Double.MIN_VALUE;
+        }
+
     }
 
     /**

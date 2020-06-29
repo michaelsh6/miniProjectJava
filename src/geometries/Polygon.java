@@ -73,9 +73,9 @@ public class Polygon extends Geometry {
             this.boundingBoxMaxX = Math.max(this.boundingBoxMaxX, point.get_x().get());
             this.boundingBoxMaxY = Math.max(this.boundingBoxMaxY, point.get_y().get());
             this.boundingBoxMaxZ = Math.max(this.boundingBoxMaxZ, point.get_z().get());
-            this.boundingBoxMinX = Math.min(this.boundingBoxMaxX, point.get_x().get());
-            this.boundingBoxMinY = Math.min(this.boundingBoxMaxY, point.get_y().get());
-            this.boundingBoxMinZ = Math.min(this.boundingBoxMaxZ, point.get_z().get());
+            this.boundingBoxMinX = Math.min(this.boundingBoxMinX, point.get_x().get());
+            this.boundingBoxMinY = Math.min(this.boundingBoxMinY, point.get_y().get());
+            this.boundingBoxMinZ = Math.min(this.boundingBoxMinZ, point.get_z().get());
         }
 
     }

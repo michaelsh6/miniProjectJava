@@ -11,12 +11,12 @@ import java.util.List;
 public abstract class Intersectable {
 
     protected double
-            boundingBoxMinX = Double.MAX_VALUE
-            ,boundingBoxMaxX = Double.MIN_VALUE
-            ,boundingBoxMinY= Double.MAX_VALUE
-            ,boundingBoxMaxY = Double.MIN_VALUE
-            ,boundingBoxMinZ= Double.MAX_VALUE
-            ,boundingBoxMaxZ = Double.MIN_VALUE;
+            boundingBoxMinX = Double.POSITIVE_INFINITY
+            ,boundingBoxMaxX = Double.NEGATIVE_INFINITY
+            ,boundingBoxMinY= Double.POSITIVE_INFINITY
+            ,boundingBoxMaxY = Double.NEGATIVE_INFINITY
+            ,boundingBoxMinZ= Double.POSITIVE_INFINITY
+            ,boundingBoxMaxZ = Double.NEGATIVE_INFINITY;
 
     /**
      * *function to implement for calculating the Intersections of ray with Intersectable object
@@ -36,8 +36,143 @@ public abstract class Intersectable {
     public abstract List<GeoPoint>  findIntersections(Ray ray, double max);
 
 
+    /**
+     * BoundingBoxIntersect
+     * @param ray rey to check
+     * @return true if Bounding Box Intersect with ray else false
+     */
     public boolean isBoundingBoxIntersect(Ray ray){
-        return  false;
+        Point3D head = ray.get_tail();
+        Point3D direction = ray.get_direction().get_head();
+        double d = direction.get_x().get();
+        d= d==0?0.0000001:d;
+        double minT  = (boundingBoxMinX-head.get_x().get())/d;
+        double maxT  = (boundingBoxMaxX-head.get_x().get())/d;
+        if (minT>maxT){
+            double temp = minT;
+            minT = maxT;
+            maxT = temp;
+        }
+        d = direction.get_y().get();
+        d= d==0?0.0000001:d;
+        double minT1 =  (boundingBoxMinY-head.get_y().get())/d;
+        double maxT1=   (boundingBoxMaxY-head.get_y().get())/d;
+        if (minT1>maxT1){
+            double temp = minT1;
+            minT1 = maxT1;
+            maxT1 = temp;
+        }
+        minT  = Math.max( minT,minT1);
+        maxT  = Math.min( maxT,maxT1);
+        d = direction.get_z().get();
+        d= d==0?0.0000001:d;
+        minT1 =  (boundingBoxMinZ-head.get_z().get())/d;
+        maxT1=   (boundingBoxMaxZ-head.get_z().get())/d;
+        if (minT1>maxT1){
+            double temp = minT1;
+            minT1 = maxT1;
+            maxT1 = temp;
+        }
+        minT  = Math.max( minT,minT1);
+        maxT  = Math.min( maxT,maxT1);
+        return  (minT<=maxT) &&(minT>0);
+
+//
+//        Point3D start = ray.get_tail();
+//
+//        double start_X = start.get_x().get();
+//        double start_Y = start.get_y().get();
+//        double start_Z = start.get_z().get();
+//
+//        Point3D direction = ray.get_direction().get_head();
+//
+//        double direction_X = direction.get_x().get();
+//        double direction_Y = direction.get_y().get();
+//        double direction_Z = direction.get_z().get();
+//
+//        double max_t_for_X;
+//        double min_t_for_X;
+//
+//        //If the direction_X is negative then the _min_X give the maximal value
+//        if (direction_X < 0) {
+//            max_t_for_X = (boundingBoxMinX - start_X) / direction_X;
+//            // Check if the Intersectble is behind the camera
+//            if (max_t_for_X <= 0) return false;
+//            min_t_for_X = (boundingBoxMaxX - start_X) / direction_X;
+//        }
+//        else if (direction_X > 0) {
+//            max_t_for_X = (boundingBoxMaxX - start_X) / direction_X;
+//            if (max_t_for_X <= 0) return false;
+//            min_t_for_X = (boundingBoxMinX - start_X) / direction_X;
+//        }
+//        else {
+//            if (start_X >=boundingBoxMaxX || start_X <= boundingBoxMinX)
+//                return false;
+//            else{
+//                max_t_for_X = Double.POSITIVE_INFINITY;
+//                min_t_for_X = Double.NEGATIVE_INFINITY;
+//            }
+//        }
+//
+//        double max_t_for_Y;
+//        double min_t_for_Y;
+//
+//        if (direction_Y < 0) {
+//            max_t_for_Y = (boundingBoxMinY - start_Y) / direction_Y;
+//            if (max_t_for_Y <= 0) return false;
+//            min_t_for_Y = (boundingBoxMaxY - start_Y) / direction_Y;
+//        }
+//        else if (direction_Y > 0) {
+//            max_t_for_Y = (boundingBoxMaxY - start_Y) / direction_Y;
+//            if (max_t_for_Y <= 0) return false;
+//            min_t_for_Y = (boundingBoxMinY - start_Y) / direction_Y;
+//        }
+//        else {
+//            if (start_Y >= boundingBoxMaxY || start_Y <= boundingBoxMinY)
+//                return false;
+//            else{
+//                max_t_for_Y = Double.POSITIVE_INFINITY;
+//                min_t_for_Y = Double.NEGATIVE_INFINITY;
+//            }
+//        }
+//
+//        //Check the maximal and the minimal value for t
+//        double temp_max = Math.min(max_t_for_Y,max_t_for_X);
+//        double temp_min = Math.max(min_t_for_Y,min_t_for_X);
+//        temp_min = Math.max(temp_min,0);
+//
+//        if (temp_max < temp_min) return false;
+//
+//        double max_t_for_Z;
+//        double min_t_for_Z;
+//
+//        if (direction_Z < 0) {
+//            max_t_for_Z = (boundingBoxMinZ - start_Z) / direction_Z;
+//            if (max_t_for_Z <= 0) return false;
+//            min_t_for_Z = (boundingBoxMaxZ - start_Z) / direction_Z;
+//        }
+//        else if (direction_Z > 0) {
+//            max_t_for_Z = (boundingBoxMaxZ - start_Z) / direction_Z;
+//            if (max_t_for_Z <= 0) return false;
+//            min_t_for_Z = (boundingBoxMinZ - start_Z) / direction_Z;
+//        }
+//        else {
+//            if (start_Z >= boundingBoxMaxZ || start_Z <= boundingBoxMinZ)
+//                return false;
+//            else{
+//                max_t_for_Z = Double.POSITIVE_INFINITY;
+//                min_t_for_Z = Double.NEGATIVE_INFINITY;
+//            }
+//        }
+//
+//        temp_max = Math.min(max_t_for_Z,temp_max);
+//        temp_min = Math.max(min_t_for_Z,temp_min);
+//
+//        if (temp_max < temp_min) return false;
+//
+//        return true;
+
+
     }
 
     /**
@@ -82,7 +217,16 @@ public abstract class Intersectable {
 
     }
 
+    public Point3D getBoudingBoxCenter(){
+        return new Point3D(
+                (boundingBoxMaxX+boundingBoxMinX)/2,
+                (boundingBoxMaxY+boundingBoxMinY)/2,
+                (boundingBoxMaxZ+boundingBoxMinZ)/2);
+    }
 
+    public double BoundingBoxDistance(Intersectable boundingBox){
+        return this.getBoudingBoxCenter().distance(boundingBox.getBoudingBoxCenter());
+    }
 
 }
 
