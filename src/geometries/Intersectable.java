@@ -36,46 +36,69 @@ public abstract class Intersectable {
     public abstract List<GeoPoint>  findIntersections(Ray ray, double max);
 
 
+
     /**
      * BoundingBoxIntersect
      * @param ray rey to check
      * @return true if Bounding Box Intersect with ray else false
      */
+
     public boolean isBoundingBoxIntersect(Ray ray){
         Point3D head = ray.get_tail();
-        Point3D direction = ray.get_direction().get_head();
-        double d = direction.get_x().get();
-        d= d==0?0.0000001:d;
-        double minT  = (boundingBoxMinX-head.get_x().get())/d;
-        double maxT  = (boundingBoxMaxX-head.get_x().get())/d;
-        if (minT>maxT){
-            double temp = minT;
-            minT = maxT;
-            maxT = temp;
+        Point3D dir = ray.get_direction().get_head();
+        double[] dirRay = {dir.get_x().get(), dir.get_y().get(), dir.get_z().get()},
+                tailRay = {head.get_x().get(), head.get_y().get(), head.get_z().get()};
+        double[] minBoundingBox = {boundingBoxMinX, boundingBoxMinY, boundingBoxMinZ},
+                 maxBoundingBox = {boundingBoxMaxX, boundingBoxMaxY, boundingBoxMaxZ};
+
+        double tmin = Double.NEGATIVE_INFINITY, tmax = Double.POSITIVE_INFINITY;
+        for (int i = 0; i < 3; i++) {
+            if (dirRay[i] != 0.0) {
+                double t1 = (minBoundingBox[i] - tailRay[i]) / dirRay[i];
+                double t2 = (maxBoundingBox[i] - tailRay[i]) / dirRay[i];
+
+                tmin = Math.max(tmin, Math.min(t1, t2));
+                tmax = Math.min(tmax, Math.max(t1, t2));
+            }
+            else if (tailRay[i] <= minBoundingBox[i] || tailRay[i] >= maxBoundingBox[i] || tmax <= 0.0)
+                return false;
         }
-        d = direction.get_y().get();
-        d= d==0?0.0000001:d;
-        double minT1 =  (boundingBoxMinY-head.get_y().get())/d;
-        double maxT1=   (boundingBoxMaxY-head.get_y().get())/d;
-        if (minT1>maxT1){
-            double temp = minT1;
-            minT1 = maxT1;
-            maxT1 = temp;
-        }
-        minT  = Math.max( minT,minT1);
-        maxT  = Math.min( maxT,maxT1);
-        d = direction.get_z().get();
-        d= d==0?0.0000001:d;
-        minT1 =  (boundingBoxMinZ-head.get_z().get())/d;
-        maxT1=   (boundingBoxMaxZ-head.get_z().get())/d;
-        if (minT1>maxT1){
-            double temp = minT1;
-            minT1 = maxT1;
-            maxT1 = temp;
-        }
-        minT  = Math.max( minT,minT1);
-        maxT  = Math.min( maxT,maxT1);
-        return  (minT<=maxT) &&(minT>0);
+
+        return (tmax >= tmin ) && (tmax > 0.0);
+//        double d = dir.get_x().get();
+//        d= d==0?0.0000001:d;
+//        double minT  = (boundingBoxMinX-head.get_x().get())/d;
+//        double maxT  = (boundingBoxMaxX-head.get_x().get())/d;
+//        if (minT>maxT){
+//            double temp = minT;
+//            minT = maxT;
+//            maxT = temp;
+//        }
+//        d = dir.get_y().get();
+//        d= d==0?0.0000001:d;
+//        double minT1 =  (boundingBoxMinY-head.get_y().get())/d;
+//        double maxT1=   (boundingBoxMaxY-head.get_y().get())/d;
+//        if (minT1>maxT1){
+//            double temp = minT1;
+//            minT1 = maxT1;
+//            maxT1 = temp;
+//        }
+//        minT  = Math.max( minT,minT1);
+//        maxT  = Math.min( maxT,maxT1);
+//        d = dir.get_z().get();
+//        d= d==0?0.0000001:d;
+//        minT1 =  (boundingBoxMinZ-head.get_z().get())/d;
+//        maxT1=   (boundingBoxMaxZ-head.get_z().get())/d;
+//        if (minT1>maxT1){
+//            double temp = minT1;
+//            minT1 = maxT1;
+//            maxT1 = temp;
+//        }
+//        minT  = Math.max( minT,minT1);
+//        maxT  = Math.min( maxT,maxT1);
+//        return  (minT<=maxT) && (maxT>0);
+
+
 
 //
 //        Point3D start = ray.get_tail();
