@@ -47,8 +47,8 @@ public class ShadowTests {
         Scene scene = new Scene("Test scene");
         double cameraAngel = Math.toRadians(-3);
         scene.setCamera(new Camera(new Point3D(0, -15, 3), new Vector(0, Math.cos(cameraAngel), Math.sin(cameraAngel)), new Vector(0, -Math.sin(cameraAngel), Math.cos(cameraAngel))));
-    //    double cameraAngel = Math.toRadians(-90);
-     //   scene.setCamera(new Camera(new Point3D(0, -0, 20), new Vector(0, Math.cos(cameraAngel), Math.sin(cameraAngel)), new Vector(0, -Math.sin(cameraAngel), Math.cos(cameraAngel))));
+//        double cameraAngel = Math.toRadians(-90);
+//        scene.setCamera(new Camera(new Point3D(0, -0, 20), new Vector(0, Math.cos(cameraAngel), Math.sin(cameraAngel)), new Vector(0, -Math.sin(cameraAngel), Math.cos(cameraAngel))));
         scene.setDistance(400);
         scene.setBackground(new Color(255,255,255).scale(0.2));
         scene.setAmbientLight(new AmbientLight(new Color(0,0,0), 0.15));
@@ -84,8 +84,8 @@ public class ShadowTests {
                 1,  4E-5, 2E-7,40, 5));
 
 
-        ImageWriter imageWriter = new ImageWriter("testComplex_scene", 400, 300, 960, 720);
-        Render render = new Render(imageWriter, scene).setMultithreading(3).setDebugPrint().setSoftSadow(81);
+        ImageWriter imageWriter = new ImageWriter("testComplex_scene", 400, 300, 1440, 1080);
+        Render render = new Render(imageWriter, scene).setMultithreading(4).setDebugPrint().setSoftSadow(100);
 
         render.renderImage();
         render.writeToImage();

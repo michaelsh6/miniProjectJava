@@ -9,8 +9,8 @@ import primitives.Material;
  */
 public abstract class Geometry extends Intersectable{
 
-    protected Color _emission;
-    protected Material _material;
+    protected final Color _emission;
+    protected final Material _material;
 
 
     /**

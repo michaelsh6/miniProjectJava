@@ -10,8 +10,8 @@ import java.util.Random;
  * Ray class represents a ray in 3d coordinate system
  */
 public class Ray {
-    Vector _direction;
-    Point3D _tail;
+    final Vector _direction;
+    final Point3D _tail;
 
     /**
      * DELTA is a double const value make up for deviation of saving Point3D at computer memory
@@ -46,8 +46,8 @@ public class Ray {
      * @param ray ray to copy
      */
     public Ray(Ray ray) {
-        this._direction = new Vector(ray._direction);
-        this._tail = new Point3D(ray._tail);
+        this._direction = ray._direction;
+        this._tail = ray._tail;
     }
 
     /**
@@ -55,7 +55,7 @@ public class Ray {
      * @return get the direction of the ray(vector)
      */
     public Vector get_direction() {
-        return new Vector(_direction);
+        return _direction;
     }
 
     /**
@@ -63,7 +63,7 @@ public class Ray {
      * @return get  starting point of the ray(point3D)
      */
     public Point3D get_tail() {
-        return new Point3D(_tail);
+        return _tail;
     }
 
     public Point3D getPoint(double t){

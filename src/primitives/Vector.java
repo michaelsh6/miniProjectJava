@@ -28,7 +28,7 @@ public class Vector {
      * @param other vector to copy
      */
     public Vector(Vector other) {
-        this._head = new Point3D(other._head);
+        this._head = other._head;
     }
 
     /**
@@ -70,7 +70,7 @@ public class Vector {
      * @return new Point3D of the vector
      */
     public Point3D get_head() {
-        return new Point3D(_head);
+        return _head;
     }
 
     /**
@@ -127,7 +127,7 @@ public class Vector {
      * @return new vector after subtract the 2 vectors
      */
     public Vector subtract(Vector p) {
-        return new Vector(this._head.subtract(p._head));
+        return this._head.subtract(p._head);
     }
 
     /**

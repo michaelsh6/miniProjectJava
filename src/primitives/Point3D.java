@@ -10,9 +10,9 @@ public class Point3D {
     /**
      *  Coordinate for 3d point
      */
-    Coordinate _x;
-    Coordinate _y;
-    Coordinate _z;
+    final Coordinate _x;
+    final Coordinate _y;
+    final Coordinate _z;
 
 
     public static final Point3D ZERO = new Point3D(0.0,0.0,0.0);
@@ -24,9 +24,9 @@ public class Point3D {
      * @param _z z axis
      */
     public Point3D(Coordinate _x, Coordinate _y, Coordinate _z) {
-        this._x = new Coordinate(_x);
-        this._y = new Coordinate(_y);
-        this._z = new Coordinate(_z);
+        this._x = _x;
+        this._y = _y;
+        this._z =_z;
     }
 
     /**
@@ -57,7 +57,7 @@ public class Point3D {
      * @return Coordinate object for x axis
      */
     public Coordinate get_x() {
-        return new Coordinate(_x);
+        return _x;
     }
 
     /**
@@ -65,7 +65,7 @@ public class Point3D {
      * @return Coordinate object for y axis
      */
     public Coordinate get_y() {
-        return new Coordinate(_y);
+        return _y;
     }
 
     /**
@@ -73,7 +73,7 @@ public class Point3D {
      * @return Coordinate object for z axis
      */
     public Coordinate get_z() {
-        return new Coordinate(_z);
+        return _z;
     }
 
     /**

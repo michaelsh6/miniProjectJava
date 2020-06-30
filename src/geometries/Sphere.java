@@ -10,7 +10,7 @@ import java.util.List;
  *  Sphere class represents Sphere in 3d coordinate system
  */
 public class Sphere extends RadialGeometry{
-    Point3D _center;
+    final Point3D _center;
 
     /**
      * constructor
@@ -21,7 +21,7 @@ public class Sphere extends RadialGeometry{
      */
     public Sphere(Color emission,Material material, double _radius, Point3D _center) {
         super(emission,material,_radius);
-        this._center = new Point3D(_center);
+        this._center = _center;
         //bounding box
         boundingBoxMinX = this._center.get_x().get() -_radius;
         boundingBoxMaxX= this._center.get_x().get() +_radius;
@@ -55,7 +55,7 @@ public class Sphere extends RadialGeometry{
      * @return center
      */
     public Point3D get_center() {
-        return new Point3D(_center);
+        return _center;
     }
 
     /**

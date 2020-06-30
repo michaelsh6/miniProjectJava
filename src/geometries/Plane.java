@@ -10,8 +10,8 @@ import java.util.List;
  */
 public class Plane extends Geometry{
 
-    Vector _normal;
-    Point3D _p;
+    final Vector _normal;
+    final Point3D _p;
 
     /**
      * constructor
@@ -83,7 +83,7 @@ public class Plane extends Geometry{
      */
     @Override
     public Vector getNormal(Point3D point) {
-        return new Vector(_normal);
+        return _normal;
     }
 
     /**

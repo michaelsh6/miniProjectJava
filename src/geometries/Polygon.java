@@ -17,11 +17,11 @@ public class Polygon extends Geometry {
     /**
      * List of polygon's vertices
      */
-    protected List<Point3D> _vertices;
+    protected final List<Point3D> _vertices;
     /**
      * Associated plane in which the polygon lays
      */
-    protected Plane _plane;
+    protected final Plane _plane;
 
     /**
      * constructor
@@ -148,10 +148,9 @@ public class Polygon extends Geometry {
         if (Intersections == null) {
             return null;
         }
-        GeoPoint p = new GeoPoint(this, Intersections.get(0).getPoint());
-        return new LinkedList<>() {{
-            add(p);
-        }};
+
+        Intersections.set(0, new GeoPoint(this, Intersections.get(0).getPoint())) ;
+        return Intersections;
     }
 
 }
